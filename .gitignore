@@ -30,6 +30,7 @@ yarn-error.log
 
 # Miscellaneous
 /.angular/cache
+/.angular
 .sass-cache/
 /connect.lock
 /coverage
@@ -40,3 +41,14 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Local Netlify folder
+.netlify
+
+# Business logic kept locally for manual Netlify deployments
+/src/app/services/
+/src/app/model/
+/src/app/constants/
+/src/app/utils/
+/src/app/app.routes.ts
+/src/app/app.config.ts

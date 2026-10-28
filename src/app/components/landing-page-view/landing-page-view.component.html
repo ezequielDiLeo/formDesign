@@ -1,0 +1,38 @@
+<div class="edit-outer">
+
+  <div class="edit-header">
+    <button mat-icon-button class="header-back-btn" aria-label="Volver" (click)="back()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div>
+      <span class="edit-crumb"><span class="edit-crumb-segment">Formularios</span><span class="edit-crumb-segment">Formulario</span></span>
+      <h3 class="edit-title">Formulario</h3>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <mat-progress-bar mode="indeterminate" />
+  }
+
+  @if (!loading() && form()) {
+
+    <div class="view-card">
+      <h4 class="card-caption">Datos del formulario</h4>
+      <div class="detail-info-grid">
+        <div class="detail-field">
+          <span class="detail-label">Nombre</span>
+          <span class="detail-value">{{ form()!.name }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">Cálculo</span>
+          <span class="detail-value">{{ calcLabel() }}</span>
+        </div>
+        <div class="detail-field full-width">
+          <span class="detail-label">Descripción</span>
+          <span class="detail-value">{{ form()!.description || '-' }}</span>
+        </div>
+      </div>
+    </div>
+
+  }
+</div>

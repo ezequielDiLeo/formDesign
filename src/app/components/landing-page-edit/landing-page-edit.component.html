@@ -1,0 +1,90 @@
+<div class="edit-outer">
+  <div class="edit-header">
+    <button mat-icon-button class="header-back-btn" aria-label="Volver" (click)="router.navigate(['/formularios'])">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div>
+      <span class="edit-crumb"><span class="edit-crumb-segment">Formularios</span><span class="edit-crumb-segment">Formulario</span></span>
+      <h3 class="edit-title">
+        {{ isEditMode ? 'Editar Formulario' : 'Nuevo Formulario' }}
+      </h3>
+      <p class="edit-subtitle">
+        Configuración de formulario
+      </p>
+    </div>
+  </div>
+
+  <div class="edit-card edit-card--flat">
+    <h4 class="card-caption">Datos del formulario</h4>
+
+    @if (loading()) {
+      <mat-progress-bar mode="indeterminate" class="card-loading-bar" />
+    }
+
+    @if (!loading()) {
+      <form id="landingPageEditForm" [formGroup]="innerForm" (ngSubmit)="saveAndContinue()" class="edit-form edit-form--flat edit-form-grid" novalidate>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="name" autocomplete="off" />
+
+          @if (innerForm.get('name')?.hasError('required') && innerForm.get('name')?.touched) {
+            <mat-error>El nombre es obligatorio</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Cálculo</mat-label>
+          <mat-select formControlName="group">
+
+            <mat-option value="">Seleccione un cálculo</mat-option>
+
+            @for (calc of calcs; track calc.group) {
+              <mat-option [value]="calc.group">
+                {{ calc.group }} - {{ calc.description }}
+              </mat-option>
+            }
+
+          </mat-select>
+
+          @if (innerForm.get('group')?.hasError('required') && innerForm.get('group')?.touched) {
+            <mat-error>El cálculo es obligatorio</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="edit-span">
+          <mat-label>Descripción</mat-label>
+          <textarea matInput formControlName="description"></textarea>
+
+          @if (innerForm.get('description')?.hasError('required') && innerForm.get('description')?.touched) {
+            <mat-error>La descripción es obligatoria</mat-error>
+          }
+        </mat-form-field>
+
+      </form>
+    }
+  </div>
+
+  @if (!loading()) {
+    <div class="edit-actions edit-actions--page">
+
+      <button mat-stroked-button type="button" (click)="router.navigate(['/formularios'])">
+        <mat-icon>close</mat-icon>
+        Cancelar
+      </button>
+
+      <button
+        mat-flat-button
+        color="primary"
+        type="submit"
+        form="landingPageEditForm"
+        [disabled]="innerForm.invalid"
+      >
+        <mat-icon>save</mat-icon>
+        Continuar al Diseño
+      </button>
+
+    </div>
+  }
+
+</div>

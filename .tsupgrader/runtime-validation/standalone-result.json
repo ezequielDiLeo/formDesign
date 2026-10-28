@@ -1,0 +1,113 @@
+{
+  "planHash": "e840218666f5d1aac0e9a2212385a7e3bebea0664aaeee500cea84dc5aa16e07",
+  "phase": "standalone",
+  "recordedAtUtc": "2026-10-28T15:20:23.3519085Z",
+  "retryCount": 1,
+  "resetBaseline": false,
+  "complete": true,
+  "result": {
+    "setupSucceeded": true,
+    "setupDurationMs": 158956,
+    "setupFailureOutput": null,
+    "assertions": [
+      {
+        "name": "production-build",
+        "kind": "process",
+        "verificationMethod": "exit-code",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": 0,
+        "outputSample": "npm notice run form-design@0.0.0 build\r\nnpm notice run ng build\r\n\u001B[33m\u003E\u001B[39m Building...\r\n\u001B[32m\u221A\u001B[39m Building...\r\n\u001B[1mInitial chunk files\u001B[22m  \u001B[2m | \u001B[22m\u001B[1mNames\u001B[22m                       \u001B[2m | \u001B[22m \u001B[1mRaw size\u001B[22m\u001B[2m | \u001B[22m\u001B[1mEstimated transfer size\u001B[22m\r\n\u001B[32mchunk-ONPVYFKT.js\u001B[39m    \u001B[2m | \u001B[22m\u001B[2m-\u001B[22m                           \u001B[2m | \u001B[22m\u001B[36m265.15 kB\u001B[39m\u001B[2m | \u001B[22m               \u001B[36m72.01 kB\u001B[39m\r\n\u001B[32mpolyfills-5CFQRCPP.js\u001B[39m\u001B[2m | \u001B[22m\u001B[2mpolyfills\u001B[22m                   \u001B[2m | \u001B[22m \u001B[36m34.59 kB\u001B[39m\u001B[2m | \u001B[22m               \u001B[36m11.33 kB\u001B[39m\r\n\u001B[32mstyles-3TLXBM6F.css\u001B[39m  \u001B[2m | \u001B[22m\u001B[2mstyles\u001B[22m                      \u001B[2m | \u001B[22m  \u001B[36m7.69 kB\u001B[39m\u001B[2m | \u001B[22m                \u001B[36m1.36 kB\u001B[39m\r\n\u001B[32mmain-V57HWUBP.js\u001B[39m     \u001B[2m | \u001B[22m\u001B[2mmain\u001B[22m                        \u001B[2m | \u001B[22m  \u001B[36m1.69 kB\u001B[39m\u001B[2m | \u001B[22m              \u001B[36m705 bytes\u001B[39m\r\n\r\n\u001B[1m \u001B[22m                    \u001B[2m | \u001B[22m\u001B[1mInitial total\u001B[22m               \u001B[2m | \u001B[22m\u001B[1m309.12 kB\u001B[22m\u001B[2m | \u001B[22m               \u001B[1m85.41 kB\u001B[22m\r\n\r\n\u001B[1mLazy chunk files\u001B[22m     \u001B[2m | \u001B[22m\u001B[1mNames\u001B[22m                       \u001B[2m | \u001B[22m \u001B[1mRaw size\u001B[22m\u001B[2m | \u001B[22m\u001B[1mEstimated transfer size\u001B[22m\r\n\u001B[32mchunk-R7QYWQ5A.js\u001B[39m    \u001B[2m | \u001B[22m\u001B[2m-\u001B[22m                           \u001B[2m | \u001B[22m\u001B[36m160.82 kB\u001B[39m\u001B[2m | \u001B[22m               \u001B[36m34.18 kB\u001B[39m\r\n\u001B[32mchunk-IA65VQPD.js\u001B[39m    \u001B[2m | \u001B[22m\u001B[2m-\u001B[22m                           \u001B[2m | \u001B[22m\u001B[36m150.86 kB\u001B[39m\u001B[2m | \u001B[22m               \u001B[36m27.89 kB\u001B[39m\r\n\u001B[32mchunk-P57XOPIH.js\u001B[39m    \u001B[2m | \u001B[22m\u001B[2m-\u001B[22m                           \u001B[2m | \u001B[22m\u001B[36m117.28 kB\u001B[39m\u001B[2m | \u001B[22m               \u001B[36m20.97 kB\u001B[39m\r\n\u001B[32mchunk-5DK54PJD.js\u001B[39m    \u001B[2m | \u001B[22m\u001B[2mlanding-page-component\u001B[22m      \u001B[2m | \u001B[22m\u001B[36m112.98 kB\u001B[39m\u001B[2m | \u001B[22m               \u001B[36m24.77 kB\u001B[39m\r\n\u001B[32mchunk-3JF733ZD.js\u001B[39m    \u001B[2m | \u001B[22m\u001B[2mlanding-forms-grid-component\u001B[22m\u001B[2m | \u001B[22m \u001B[36m77.28 kB\u001B[39m\u001B[2m | \u001B[22m               \u001B[36m17.18 kB\u001B[39m\r\n\u001B[32mchunk-I2DKXSUP.js\u001B[39m    \u001B[2m | \u001B[22m\u001B[2mpreview-landing-component\u001B[22m   \u001B[2m | \u001B[22m \u001B[36m26.98 kB\u001B[39m\u001B[2m | \u001B[22m                \u001B[36m6.80 kB\u001B[39m\r\n\u001B[32mchunk-6MRWXNSE.js\u001B[39m    \u001B[2m | \u001B[22m\u001B[2m-\u001B[22m                           \u001B[2m | \u001B[22m \u001B[36m11.01 kB\u001B[39m\u001B[2m | \u001B[22m                \u001B[36m2.54 kB\u001B[39m\r\n\u001B[32mchunk-OC4JP7GR.js\u001B[39m    \u001B[2m | \u001B[22m\u001B[2mlanding-page-edit-component\u001B[22m \u001B[2m | \u001B[22m \u001B[36m10.26 kB\u001B[39m\u001B[2m | \u001B[22m                \u001B[36m3.37 kB\u001B[39m\r\n\u001B[32mchunk-FQROY3WQ.js\u001B[39m    \u001B[2m | \u001B[22m\u001B[2mlanding-page-view-component\u001B[22m \u001B[2m | \u001B[22m  \u001B[36m3.48 kB\u001B[39m\u001B[2m | \u001B[22m                \u001B[36m1.38 kB\u001B[39m\r\n\u001B[32mchunk-C72BKUJP.js\u001B[39m    \u001B[2m | \u001B[22m\u001B[2m-\u001B[22m                           \u001B[2m | \u001B[22m\u001B[36m222 bytes\u001B[39m\u001B[2m | \u001B[22m              \u001B[36m222 bytes\u001B[39m\r\n\u001B[32mchunk-NJY6F3LT.js\u001B[39m    \u001B[2m | \u001B[22m\u001B[2m-\u001B[22m                           \u001B[2m | \u001B[22m  \u001B[36m0 bytes\u001B[39m\u001B[2m | \u001B[22m                \u001B[36m0 bytes\u001B[39m\r\n\r\nApplication bundle generation complete. [11.243 seconds]\r\n\r\n\u001B[1m\u001B[33m\u001B[33m\u25B2 \u001B[43;33m[\u001B[43;30mWARNING\u001B[43;33m]\u001B[0m \u001B[1msrc/app/components/canvas/canvas.component.css exceeded maximum budget. Budget 4.00 kB was not met by 1.98 kB with a total of 5.98 kB.\u001B[0m\r\n\r\n\r\n\u001B[33m\u25B2 \u001B[43;33m[\u001B[43;30mWARNING\u001B[43;33m]\u001B[0m \u001B[1msrc/app/components/preview-landing/preview-landing.component.scss exceeded maximum budget. Budget 4.00 kB was not met by 3.93 kB with a total of 7.93 kB.\u001B[0m\r\n\r\n\u001B[39m\u001B[22m\r\nOutput location: c:\\Users\\ezemr\\OneDrive\\Escritorio\\proyectos a mejorar\\formDesign\\formDesign\\dist\\form-design\r\n\r\n",
+        "durationMs": 40602
+      },
+      {
+        "name": "tests-pass",
+        "kind": "process",
+        "verificationMethod": "test-results",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": 0,
+        "outputSample": "npm notice run form-design@0.0.0 test\r\nnpm notice run ng test --watch=false --browsers=ChromeHeadless\r\n- Generating browser application bundles (phase: setup)...\r\n\u221A Browser application bundle generation complete.\r\n\u001B[32m28 10 2026 12:20:07.998:INFO [karma-server]: \u001B[39mKarma v6.4.4 server started at http://localhost:9876/\r\n\u001B[32m28 10 2026 12:20:08.003:INFO [launcher]: \u001B[39mLaunching browsers ChromeHeadless with concurrency unlimited\r\n\u001B[32m28 10 2026 12:20:08.097:INFO [launcher]: \u001B[39mStarting browser ChromeHeadless\r\n\u001B[32m28 10 2026 12:20:09.446:INFO [Chrome Headless 156.0.0.0 (Windows 10)]: \u001B[39mConnected on socket 8oJQAfGeWP1Y4hIfAAAA with id 40203826\r\nChrome Headless 156.0.0.0 (Windows 10): Executed 0 of 4\u001B[32m SUCCESS\u001B[39m (0 secs / 0 secs)\r\n\u001B[1A\u001B[2KChrome Headless 156.0.0.0 (Windows 10): Executed 1 of 4\u001B[32m SUCCESS\u001B[39m (0 secs / 0.018 secs)\r\n\u001B[1A\u001B[2KChrome Headless 156.0.0.0 (Windows 10): Executed 2 of 4\u001B[32m SUCCESS\u001B[39m (0 secs / 0.022 secs)\r\n\u001B[1A\u001B[2KChrome Headless 156.0.0.0 (Windows 10): Executed 3 of 4\u001B[32m SUCCESS\u001B[39m (0 secs / 0.029 secs)\r\n\u001B[1A\u001B[2KChrome Headless 156.0.0.0 (Windows 10): Executed 4 of 4\u001B[32m SUCCESS\u001B[39m (0 secs / 0.072 secs)\r\n\u001B[1A\u001B[2KChrome Headless 156.0.0.0 (Windows 10): Executed 4 of 4\u001B[32m SUCCESS\u001B[39m (0.091 secs / 0.072 secs)\r\n\u001B[32mTOTAL: 4 SUCCESS\u001B[39m\r\n\u221A Browser application bundle generation complete.\r\n\u221A Browser application bundle generation complete.\r\n",
+        "durationMs": 69288,
+        "testResults": {
+          "testFramework": "jasmine",
+          "runnerDetectedFrom": "package_json",
+          "testsTotal": 0,
+          "testsPassed": 0,
+          "testsFailed": 0,
+          "testsSkipped": 0,
+          "parseFailed": true
+        }
+      },
+      {
+        "name": "forms-route-serves",
+        "kind": "http-probe",
+        "verificationMethod": "http-status",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": null,
+        "outputSample": "HTTP 200\n\u003C!doctype html\u003E\r\n\u003Chtml lang=\u0022en\u0022\u003E\r\n\u003Chead\u003E\n  \u003Cscript type=\u0022module\u0022 src=\u0022/@vite/client\u0022\u003E\u003C/script\u003E\n\r\n  \u003Cmeta charset=\u0022utf-8\u0022\u003E\r\n  \u003Ctitle\u003EFormDesign\u003C/title\u003E\r\n  \u003Cbase href=\u0022/\u0022\u003E\r\n  \u003Cmeta name=\u0022viewport\u0022 content=\u0022width=device-width, initial-scale=1\u0022\u003E\r\n  \u003Clink rel=\u0022icon\u0022 type=\u0022image/x-icon\u0022 href=\u0022favicon.ico\u0022\u003E\r\n  \u003Clink rel=\u0022preconnect\u0022 href=\u0022https://fonts.googleapis.com\u0022\u003E\r\n  \u003Clink rel=\u0022preconnect\u0022 href=\u0022https://fonts.gstatic.com\u0022 crossorigin=\u0022\u0022\u003E\r\n  \u003Clink href=\u0022https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500\u0026amp;display=swap\u0022 rel=\u0022stylesheet\u0022\u003E\n  \u003Clink href=\u0022https://fonts.googleapis.com/icon?family=Material\u002BIcons\u0022 rel=\u0022stylesheet\u0022\u003E\n\u003Clink rel=\u0022stylesheet\u0022 href=\u0022styles.css\u0022\u003E\u003C/head\u003E\r\n\u003Cbody class=\u0022mc-light-theme\u0022 data-theme=\u0022mc-light\u0022\u003E\r\n  \u003Capp-root\u003E\u003C/app-root\u003E\r\n\u003Cscript src=\u0022polyfills.js\u0022 type=\u0022module\u0022\u003E\u003C/script\u003E\u003Cscript src=\u0022main.js\u0022 type=\u0022module\u0022\u003E\u003C/script\u003E\u003C/body\u003E\r\n\u003C/html\u003E\r\n\n--- server output ---\nnpm notice run form-design@0.0.0 start\r\nnpm notice run ng serve --host 127.0.0.1 --port 4200\r\n\u001B[1m\u001B[33mComponent HMR has been enabled, see https://angular.dev/hmr for more info.\u001B[39m\u001B[22m\r\n\u001B[33m\u003E\u001B[39m Building...\r\n\u001B[32m\u221A\u001B[39m Building...\r\n\u001B[1mInitial chunk files\u001B[22m\u001B[2m | \u001B[22m\u001B[1mNames\u001B[22m                       \u001B[2m | \u001B[22m \u001B[1mRaw size\u001B[22m\r\n\u001B[32mpolyfills.js\u001B[39m       \u001B[2m | \u001B[22m\u001B[2mpolyfills\u001B[22m                   \u001B[2m | \u001B[22m \u001B[36m89.77 kB\u001B[39m\u001B[2m | \u001B[22m\r\n\u001B[32mstyles.css\u001B[39m         \u001B[2m | \u001B[22m\u001B[2mstyles\u001B[22m                      \u001B[2m | \u001B[22m  \u001B[36m8.65 kB\u001B[39m\u001B[2m | \u001B[22m\r\n\u001B[32mmain.js\u001B[39m            \u001B[2m | \u001B[22m\u001B[2mmain\u001B[22m                        \u001B[2m | \u001B[22m  \u001B[36m4.35 kB\u001B[39m\u001B[2m | \u001B[22m\r\n\u001B[32mchunk-XWLXMCJQ.js\u001B[39m  \u001B[2m | \u001B[22m\u001B[2m-\u001B[22m                           \u001B[2m | \u001B[22m  \u001B[36m2.07 kB\u001B[39m\u001B[2m | \u001B[22m\r\n\r\n\u001B[1m \u001B[22m                  \u001B[2m | \u001B[22m\u001B[1mInitial total\u001B[22m               \u001B[2m | \u001B[22m\u001B[1m104.84 kB\u001B[22m\r\n\r\n\u001B[1mLazy chunk files\u001B[22m   \u001B[2m | \u001B[22m\u001B[1mNames\u001B[22m                       \u001B[2m | \u001B[22m \u001B[1mRaw size\u001B[22m\r\n\u001B[32mchunk-ATPDOMCU.js\u001B[39m  \u001B[2m | \u001B[22m\u001B[2mlanding-page-component\u001B[22m      \u001B[2m | \u001B[22m\u001B[36m159.21 kB\u001B[39m\u001B[2m | \u001B[22m\r\n\u001B[32mchunk-ZPIJL5XT.js\u001B[39m  \u001B[2m | \u001B[22m\u001B[2mpreview-landing-component\u001B[22m   \u001B[2m | \u001B[22m \u001B[36m83.51 kB\u001B[39m\u001B[2m | \u001B[22m\r\n\u001B[32mchunk-IDWQDWLW.js\u001B[39m  \u001B[2m | \u001B[22m\u001B[2mlanding-forms-grid-component\u001B[22m\u001B[2m | \u001B[22m \u001B[36m31.35 kB\u001B[39m\u001B[2m | \u001B[22m\r\n\u001B[32mchunk-6HXMDYGI.js\u001B[39m  \u001B[2m | \u001B[22m\u001B[2mlanding-page-edit-component\u001B[22m \u001B[2m | \u001B[22m \u001B[36m28.31 kB\u001B[39m\u001B[2m | \u001B[22m\r\n\u001B[32mchunk-TWQPYELT.js\u001B[39m  \u001B[2m | \u001B[22m\u001B[2m-\u001B[22m                           \u001B[2m | \u001B[22m \u001B[36m13.25 kB\u001B[39m\u001B[2m | \u001B[22m\r\n\u001B[32mchunk-W5ZN7SO3.js\u001B[39m  \u001B[2m | \u001B[22m\u001B[2mlanding-page-view-component\u001B[22m \u001B[2m | \u001B[22m \u001B[36m11.17 kB\u001B[39m\u001B[2m | \u001B[22m\r\n\u001B[32mchunk-UDECAODA.js\u001B[39m  \u001B[2m | \u001B[22m\u001B[2m-\u001B[22m                           \u001B[2m | \u001B[22m\u001B[36m768 bytes\u001B[39m\u001B[2m | \u001B[22m\r\n\u001B[32mchunk-VRDLSNSN.js\u001B[39m  \u001B[2m | \u001B[22m\u001B[2m-\u001B[22m                           \u001B[2m | \u001B[22m\u001B[36m549 bytes\u001B[39m\u001B[2m | \u001B[22m\r\n\r\nApplication bundle generation complete. [6.583 seconds]\r\n\r\nWatch mode enabled. Watching for file changes...\r\nNOTE: Raw file sizes do not reflect development server per-request transformations.\r\n\u001B[2m12:20:22\u001B[22m \u001B[36m\u001B[1m[vite]\u001B[22m\u001B[39m \u001B[90m\u001B[2m(client)\u001B[22m\u001B[39m Re-optimizing dependencies because vite config has changed\r\n  \u001B[32m\u279C\u001B[39m  \u001B[1mLocal\u001B[22m:   \u001B[36mhttp://127.0.0.1:\u001B[1m4200\u001B[22m/\u001B[39m\r\n",
+        "durationMs": 12175
+      }
+    ],
+    "executions": [
+      {
+        "source": "setup[0]",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\npm.CMD",
+        "args": [
+          "ci"
+        ],
+        "cwd": "c:\\Users\\ezemr\\OneDrive\\Escritorio\\proyectos a mejorar\\formDesign\\formDesign",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32"
+      },
+      {
+        "source": "production-build",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\npm.CMD",
+        "args": [
+          "run",
+          "build"
+        ],
+        "cwd": "c:\\Users\\ezemr\\OneDrive\\Escritorio\\proyectos a mejorar\\formDesign\\formDesign",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32"
+      },
+      {
+        "source": "tests-pass",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\npm.CMD",
+        "args": [
+          "test"
+        ],
+        "cwd": "c:\\Users\\ezemr\\OneDrive\\Escritorio\\proyectos a mejorar\\formDesign\\formDesign",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32"
+      },
+      {
+        "source": "forms-route-serves",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\npm.CMD",
+        "args": [
+          "run",
+          "start",
+          "--",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "4200"
+        ],
+        "cwd": "c:\\Users\\ezemr\\OneDrive\\Escritorio\\proyectos a mejorar\\formDesign\\formDesign",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32"
+      }
+    ]
+  }
+}

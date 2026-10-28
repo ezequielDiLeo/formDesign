@@ -1,0 +1,433 @@
+<div class="canvas-area">
+  <div class="canvas-header">
+    <button class="btn back-btn" (click)="backClicked.emit()"><mat-icon>arrow_back</mat-icon></button>
+    <button class="save-btn" (click)="saveClicked.emit()">Guardar</button>
+    <button class="preview-btn" (click)="previewClicked.emit()">Previsualizar</button>
+  </div>
+
+  <div
+    cdkDropList
+    cdkDropListOrientation="mixed"
+    #canvasList="cdkDropList"
+    [cdkDropListData]="inputFields()"
+    class="canvas"
+    (cdkDropListDropped)="dropped.emit($event)"
+    (click)="backgroundClicked.emit($event)"
+    [style.backgroundColor]="formModel().settings.backgroundColor"
+    [style.padding]="formModel().settings.padding"
+    [style.maxWidth]="formModel().settings.maxWidth"
+    [style.borderRadius]="formModel().settings.borderRadius"
+    style="margin:0 auto;"
+  >
+    @for (item of inputFields(); track item.id) {
+      <div
+        cdkDrag
+        [cdkDragData]="item"
+        [cdkDragDisabled]="item.isResult"
+        class="canvas-field"
+        [attr.data-field-id]="item.id"
+        [style.gridColumn]="getFieldGridColumn(item)"
+        [style.textAlign]="item.textAlign"
+        [style.justifyContent]="getJustifyContent(item)"
+        [class.selected]="selectedField()?.id === item.id"
+        [style.minHeight]="getMinHeight(item)"
+
+        (click)="$event.stopPropagation(); fieldSelected.emit(item)"
+        style="display: flex; flex-direction: column; position: relative;"
+      >
+        @if (item.type === 'select') {
+          <div
+            class="designer-input"
+            style="display: flex; flex-direction: column; height: 100%;"
+            [style.justifyContent]="getJustifyContent(item)"
+            [style.alignItems]="
+              item.textAlign === 'left' ? 'flex-start' :
+              item.textAlign === 'right' ? 'flex-end' :
+              'center'
+            "
+          >
+            <mat-form-field
+              appearance="outline"
+              style="width: 100%;"
+              [class.field-no-border]="item.border === false"
+              [style.--field-border-color]="item.borderColor || '#ccc'"
+            >
+              <mat-label
+                [style.color]="item.color"
+                [style.fontSize]="item.fontSize || '20px'"
+                [style.fontFamily]="item.fontFamily"
+                [style.fontWeight]="item.fontWeight || '500'"
+                class="mat-label"
+              >
+                {{ item.label.trim() || 'Label' }}
+              </mat-label>
+
+              <mat-select
+                [(ngModel)]="item.value"
+                [style.fontSize]="item.fontSize || '20px'"
+                [style.fontFamily]="item.fontFamily"
+                [style.color]="item.inputColor"
+                [style.textAlign]="item.textAlign || 'center'"
+                [style.fontWeight]="item.fontWeight || '500'"
+                [disabled]="true"
+              >
+                <mat-option [value]="null">-- Seleccione --</mat-option>
+                @for (opt of item.values; track $index) {
+                  <mat-option [value]="opt.value">
+                    {{ opt.name }}
+                  </mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+        }
+
+        @if (item.type === 'email') {
+          <div class="designer-input" style="display: flex; flex-direction: column; height: 100%;"
+            [style.justifyContent]="getJustifyContent(item)"
+            [style.alignItems]="
+              item.textAlign === 'left' ? 'flex-start' :
+              item.textAlign === 'right' ? 'flex-end' :
+              'center'
+            "
+          >
+            <mat-form-field
+              appearance="outline"
+              style="width: 100%;"
+              [class.field-no-border]="item.border === false"
+              [style.--field-border-color]="item.borderColor || '#ccc'"
+              >
+              <mat-label
+                [style.color]="item.color"
+                [style.fontSize]="item.fontSize || '20px'"
+                [style.fontFamily]="item.fontFamily"
+                [style.textAlign]="item.textAlign"
+                [style.verticalAlign]="'top'"
+                [style.fontWeight]="item.fontWeight || '500'"
+                style="display:block; margin-bottom:4px;"
+              >{{ item.label }}</mat-label>
+
+              <input
+                matInput
+                type="email"
+                [(ngModel)]="item.value"
+                [disabled]="true"
+                [style.backgroundColor]="item.isResult ? '#ffffff' : (item.backgroundColor)"
+                [style.fontWeight]="item.fontWeight || '500'"
+                [style.fontSize]="item.fontSize || '20px'"
+                [style.fontFamily]="item.fontFamily"
+                [style.textAlign]="item.textAlign"
+                [style.color]="item.inputColor"
+                [style.verticalAlign]="'top'"
+                [style.width]="'100%'"
+                style="background-color: white; width: 100%; height: 0;"
+              />
+            </mat-form-field>
+          </div>
+        }
+        @else {
+          @switch (item.type) {
+            @case('line') {
+              <div
+                [style.borderTopWidth]="item.height || '2px'"
+                [style.borderTopStyle]="item.borderStyle || 'solid'"
+                [style.borderTopColor]="item.color || '#000'"
+                style="width: 100%; margin: 10px 0;"
+              ></div>
+            }
+            @case('button') {
+              <button
+                class="canvas-button"
+                [style.backgroundColor]="item.backgroundColor || '#2563eb'"
+                [style.color]="item.color || '#ffffff'"
+                [style.fontSize]="item.fontSize || '20px'"
+                [style.fontFamily]="item.fontFamily"
+                [style.fontWeight]="item.fontWeight"
+                [style.textAlign]="item.textAlign"
+                [style.borderRadius]="item.borderRadius || '4px'"
+                [style.border]="item.border === false ? 'none' : '1px solid ' + (item.borderColor || '#ccc')"
+                style="width: 100%; box-sizing: border-box;"
+              >
+                {{ item.label }}
+              </button>
+            }
+            @case('form-title') {
+              <h2
+                class="form-title"
+                [style.display]="'flex'"
+                [style.flexDirection]="'column'"
+                [style.justifyContent]="getJustifyContent(item)"
+                [style.alignItems]="
+                  item.textAlign === 'left'
+                    ? 'flex-start'
+                    : item.textAlign === 'right'
+                      ? 'flex-end'
+                      : 'center'
+                "
+                [style.margin]="'0'"
+                [style.width]="'100%'"
+                [style.height]="'100%'"
+                [style.fontSize]="item.fontSize || '24px'"
+                [style.color]="item.color"
+                [style.fontFamily]="item.fontFamily"
+                [style.fontWeight]="item.fontWeight || '500'"
+              >
+                {{ item.label }}
+              </h2>
+            }
+            @case('image') {
+              @if (item.src) {
+                <img
+                  [src]="item.src"
+                  [style.height]="item.imageHeight || '152px'"
+                  [style.objectFit]="item.objectFit || 'cover'"
+                  [style.borderRadius]="item.borderRadius || '6px'"
+                  style="display:block;"
+                />
+              }
+              @if (!item.src) {
+                <div class="image-placeholder">
+                  Arrastrá una imagen en Properties
+                </div>
+              }
+            }
+
+            @case('checkbox') {
+              <div
+                style="display: flex; align-items: center; gap: 12px;"
+                [style.justifyContent]="
+                  item.textAlign === 'left'
+                    ? 'flex-start'
+                    : item.textAlign === 'right'
+                      ? 'flex-end'
+                      : 'center'
+                "
+              >
+                <span
+                  [style.color]="item.color"
+                  [style.fontSize]="item.fontSize || '20px'"
+                  [style.fontFamily]="item.fontFamily"
+                  [style.fontWeight]="item.fontWeight || '500'"
+                >
+                  {{ item.label }}
+                </span>
+
+                <mat-slide-toggle
+                  [(ngModel)]="item.value"
+                  [disabled]="true">
+                </mat-slide-toggle>
+              </div>
+            }
+
+            <!-- DATE -->
+             @case ('date') {
+              <div
+                class="designer-input"
+                style="display: flex; flex-direction: column; height: 100%;"
+                [style.justifyContent]="getJustifyContent(item)"
+              >
+                <mat-form-field
+                  appearance="outline"
+                  style="width: 100%;"
+                  [class.field-no-border]="item.border === false"
+                  [style.--field-border-color]="item.borderColor || '#ccc'"
+                >
+                  <mat-label
+                    [style.color]="item.color"
+                    [style.fontSize]="item.fontSize || '20px'"
+                    [style.fontFamily]="item.fontFamily"
+                    [style.textAlign]="item.textAlign"
+                    [style.verticalAlign]="'top'"
+                    [style.fontWeight]="item.fontWeight || '500'"
+                    style="display:block; margin-bottom:4px;"
+                  >{{ item.label }}</mat-label>
+                  <input
+                    matInput
+                    [matDatepicker]="picker"
+                    [(ngModel)]="item.value"
+                    [style.color]="item.inputColor"
+                    [style.fontSize]="item.fontSize || '20px'"
+                    [style.fontFamily]="item.fontFamily"
+                    [style.fontWeight]="item.fontWeight || '500'"
+                    [style.textAlign]="item.textAlign"
+                  />
+                  <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="picker"
+                    disabled="true"
+                  >
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+            }
+
+            <!-- NUMBER -->
+             @case ('number') {
+              <div
+                class="designer-input"
+                style="display: flex; flex-direction: column; height: 100%;"
+                [style.justifyContent]="getJustifyContent(item)"
+              >
+                <mat-form-field
+                  appearance="outline"
+                  style="width: 100%; height: 100%;"
+                  [class.field-no-border]="item.border === false"
+                  [style.--field-border-color]="item.borderColor || '#ccc'"
+                >
+                  <mat-label
+                    [style.color]="item.color"
+                    [style.fontSize]="item.fontSize || '20px'"
+                    [style.fontFamily]="item.fontFamily"
+                    [style.textAlign]="item.textAlign"
+                    [style.verticalAlign]="'top'"
+                    [style.fontWeight]="item.fontWeight || '500'"
+                    style="display:block; margin-bottom:4px;"
+                  >{{ item.label }}</mat-label>
+                  <input
+                    matInput
+                    type="number"
+                    [disabled]="true"
+                    [(ngModel)]="item.value"
+                    [style.color]="item.inputColor"
+                    [style.fontSize]="item.fontSize || '20px'"
+                    [style.fontFamily]="item.fontFamily"
+                    [style.fontWeight]="item.fontWeight || '500'"
+                    [style.textAlign]="item.textAlign"
+                    style="background-color: white; width: 100%; height: 0;"
+                  />
+                </mat-form-field>
+              </div>
+            }
+
+            <!-- TEXT -->
+            @case ('text') {
+              @if (item.key || item.fromCalculation) {
+                <div class="designer-input">
+
+                  <mat-form-field
+                    appearance="outline"
+                    style="width: 100%;"
+                    [class.field-no-border]="item.border === false"
+                    [style.--field-border-color]="item.borderColor || '#ccc'"
+                  >
+                    <mat-label
+                      [style.color]="item.color"
+                      [style.fontSize]="item.fontSize || '20px'"
+                      [style.fontFamily]="item.fontFamily"
+                      [style.textAlign]="item.textAlign"
+                      [style.verticalAlign]="'top'"
+                      [style.fontWeight]="item.fontWeight || '500'"
+                      style="display:block; margin-bottom:4px;"
+                    >{{ item.label }}</mat-label>
+
+                    <input
+                      matInput
+                      type="text"
+                      [disabled]="true"
+                      [(ngModel)]="item.value"
+                      [style.color]="item.inputColor"
+                      [style.fontSize]="item.fontSize || '20px'"
+                      [style.fontFamily]="item.fontFamily"
+                      [style.fontWeight]="item.fontWeight || '500'"
+                      [style.textAlign]="item.textAlign"
+                      style="background-color: white; width: 100%; height: 0;"
+                    />
+                  </mat-form-field>
+                </div>
+              } @else {
+                <p
+                  class="text-content"
+                  [style.display]="'flex'"
+                  [style.alignItems]="getJustifyContent(item)"
+                  [style.justifyContent]="
+                    item.textAlign === 'left'
+                      ? 'flex-start'
+                      : item.textAlign === 'right'
+                        ? 'flex-end'
+                        : 'center'
+                  "
+                  [style.margin]="'0'"
+                  [style.width]="'100%'"
+                  [style.fontSize]="item.fontSize || '20px'"
+                  [style.color]="item.inputColor"
+                  [style.fontFamily]="item.fontFamily"
+                  [style.textAlign]="item.textAlign || 'center'"
+                  [style.fontWeight]="item.fontWeight || '500'"
+                >
+                  {{ item.label }}
+                </p>
+              }
+            }
+
+
+          }
+        }
+
+        @if (item.deletable !== false) {
+          <button class="delete-btn" (click)="fieldDeleted.emit(item); $event.stopPropagation()">×</button>
+        }
+
+        <ng-template cdkDragPreview [matchSize]="true">
+          <div class="canvas-field canvas-field-preview">
+            {{ item.label || item.type }}
+          </div>
+        </ng-template>
+
+      </div>
+
+      @if (item.breakLine) {
+        <div class="grid-break" aria-hidden="true"></div>
+      }
+    }
+
+    <div class="cont-flex-result">
+      @if (resultFields().length > 0) {
+        <div
+          class="results-divider"
+          [ngClass]="{ 'dark-divider': isDarkMode() }"
+        >
+          Resultados
+        </div>
+      }
+
+      @for (item of resultFields(); track item.id) {
+        <div
+          cdkDrag
+          [cdkDragDisabled]="true"
+          class="canvas-field result-field"
+          [style.width]="item.width"
+          [style.textAlign]="item.textAlign"
+          [class.selected]="selectedField()?.id === item.id"
+          (click)="$event.stopPropagation(); fieldSelected.emit(item)"
+        >
+          <label
+            [style.color]="item.color"
+            [style.fontSize]="item.fontSize || '20px'"
+            [style.fontFamily]="item.fontFamily"
+            style="display:block; margin-bottom:4px;"
+          >
+            {{ item.label }}
+          </label>
+          <input
+            [(ngModel)]="item.value"
+            type="text"
+            class="designer-input"
+            style="background-color: white; width: 100%; height: 0;"
+            [style.fontWeight]="item.fontWeight"
+            [style.fontSize]="item.fontSize || '20px'"
+            [style.color]="item.color"
+            [style.fontFamily]="item.fontFamily"
+            [style.border]="getBorderStyle(item)"
+            style="width:100%;"
+            readonly
+          />
+          @if (item.deletable !== false) {
+            <button class="delete-btn" (click)="fieldDeleted.emit(item); $event.stopPropagation()">×</button>
+          }
+        </div>
+      }
+    </div>
+
+  </div>
+</div>

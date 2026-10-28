@@ -1,0 +1,37 @@
+@for (section of toolboxSections(); track $index) {
+  <div class="cont-title">
+    <h2>
+      {{ section.title }}
+    </h2>
+  </div>
+
+  <div
+    cdkDropList
+    class="field-list"
+    [cdkDropListData]="section.fields"
+    [cdkDropListConnectedTo]="canvasListRef() ? [canvasListRef()!] : []"
+    [cdkDropListEnterPredicate]="noReturnPredicate">
+
+    @for (item of section.fields; track item.label) {
+
+      <div cdkDrag class="field-box">
+
+        <div class="drag-handle">::</div>
+
+        <mat-icon class="section-icon">
+          {{ section.icon }}
+        </mat-icon>
+
+        {{ item.label }}
+
+        <div *cdkDragPreview class="field-box preview">
+          <mat-icon>{{ section.icon }}</mat-icon>
+          {{ item.label }}
+        </div>
+
+      </div>
+
+    }
+
+  </div>
+}

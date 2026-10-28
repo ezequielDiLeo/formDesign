@@ -1,0 +1,116 @@
+<div class="cont-title">
+  <h2>Propiedades</h2>
+</div>
+
+@if (selectedField) {
+  <div>
+
+    @if (selectedField.type === 'image') {
+      <div class="property-group">
+        <label>Imagen</label>
+        <div class="file-upload">
+          <label class="file-btn">
+            Seleccionar archivo
+            <input
+              type="file"
+              accept="image/*"
+              (change)="imageUploaded.emit($event)"
+              hidden
+            />
+          </label>
+
+          <span class="file-name">
+            {{ selectedField.fileName || 'Ningún archivo seleccionado' }}
+          </span>
+        </div>
+      </div>
+    }
+
+    @for (prop of propertiesConfig; track $index) {
+      <div class="form-group">
+        <label>{{ prop.label }}</label>
+
+        @if (prop.type === 'input') {
+          <input
+            type="text"
+            [ngModel]="selectedField[prop.key]"
+            (ngModelChange)="updateField(prop.key, $event)"
+          />
+        }
+
+        @if (prop.type === 'select') {
+          <select
+            [ngModel]="selectedField[prop.key] ?? getFirstOption(prop.options)"
+            (ngModelChange)="updateField(prop.key, $event)"
+          >
+            @for (opt of prop.options; track $index) {
+              <option
+                [value]="opt.value !== undefined ? opt.value : opt"
+              >
+                {{ opt.label || opt }}
+              </option>
+            }
+          </select>
+        }
+
+        @if (prop.type === 'color') {
+          <input
+            type="color"
+            [ngModel]="selectedField[prop.key]"
+            (ngModelChange)="updateField(prop.key, $event)"
+          />
+        }
+
+        @if (prop.type === 'checkbox') {
+          <div class="checkbox-group">
+            <mat-slide-toggle
+              [ngModel]="selectedField[prop.key] ?? true"
+              (ngModelChange)="updateField(prop.key, $event)"
+            />
+          </div>
+        }
+      </div>
+    }
+
+  </div>
+} @else {
+  <div>
+
+    <div class="form-group">
+      <label>Color de fondo</label>
+      <input
+        type="color"
+        [ngModel]="formModel.settings.backgroundColor"
+        (ngModelChange)="updateFormSetting('backgroundColor', $event)"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Margen de contenido</label>
+      <input
+        type="text"
+        [ngModel]="formModel.settings.padding"
+        (ngModelChange)="updateFormSetting('padding', $event)"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Ancho máximo</label>
+      <input
+        type="text"
+        [(ngModel)]="formModel.settings.maxWidth"
+        (ngModelChange)="updateFormSetting('maxWidth', $event)"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Radio de borde</label>
+      <input
+        type="text"
+        [(ngModel)]="formModel.settings.borderRadius"
+        (ngModelChange)="updateFormSetting('borderRadius', $event)"
+      />
+    </div>
+
+  </div>
+}

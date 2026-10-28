@@ -1,1 +1,52 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  color-scheme: light;
+  --app-heading-font: Inter, system-ui, sans-serif;
+  --app-body-font: Inter, system-ui, sans-serif;
+  --app-surface: #ffffff;
+  --app-background: #f5f7fb;
+  --app-text: #172033;
+  --app-muted: #697386;
+  --app-border: #e2e7ef;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+  font-family: var(--app-body-font);
+  color: var(--app-text);
+  background: var(--app-background);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.mat-mdc-snack-bar-container.feedback-success {
+  --mdc-snackbar-container-color: #166534;
+}
+
+.mat-mdc-snack-bar-container.feedback-danger {
+  --mdc-snackbar-container-color: #b42318;
+}
+
+.mat-mdc-snack-bar-container.feedback-info {
+  --mdc-snackbar-container-color: #1d4ed8;
+}
+
+.local-mode-banner {
+  padding: 8px 16px;
+  color: #713f12;
+  background: #fef3c7;
+  font-size: 13px;
+  text-align: center;
+}

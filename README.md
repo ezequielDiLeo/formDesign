@@ -1,59 +1,29 @@
 # FormDesign
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.1.
+FormDesign is an Angular form designer. While the production API is unavailable, the application uses a browser-local mock API so the form creation and preview flows can be exercised without external services.
 
-## Development server
-
-To start a local development server, run:
+## Run locally
 
 ```bash
-ng serve
+npm install
+npm start
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Open `http://localhost:4200`. Create a form, select the **demo** calculation, save the details, then drag fields from the toolbox onto the canvas. The demo calculation accepts a **monto** and **tasa** and returns **total**. Save the design or open its preview from the editor.
 
-## Code scaffolding
+Forms, configurations, and uploaded images are stored in the browser's `localStorage` under `form-design.local-api.v1`. They are not sent to a server and are not shared across browsers or devices. The UI displays a local-mode banner to make that limitation clear. Clearing this site's browser data removes the mock records.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+The local API preserves the service boundary used by the UI and returns typed errors for invalid input, missing records, unsupported images, and storage failures. Replace `FormsService`'s local implementation with the real API adapter when a backend is available.
+
+## Validation
 
 ```bash
-ng generate component component-name
+npm run build
+npm test
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Deploy to Netlify
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Netlify must publish `dist/form-design/browser`, where Angular writes `index.html`.
+The included `netlify.toml` configures this for Git-based deploys; `npm run deploy`
+uses the same directory for a CLI deploy.

@@ -1,0 +1,23 @@
+.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 1px solid var(--preview-border, #d8e0ea);
+  border-radius: 12px;
+  background-color: var(--preview-control-bg, #f8fafc);
+  color: var(--preview-ink, #172033);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 180ms ease;
+
+  &:hover {
+    border-color: var(--preview-accent, #2563eb);
+    transform: translateY(-1px);
+  }
+
+  .icon {
+    font-size: 16px;
+  }
+}

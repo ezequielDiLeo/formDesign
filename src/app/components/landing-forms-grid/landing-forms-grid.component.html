@@ -1,0 +1,156 @@
+<div class="list-container">
+
+  <div class="list-header">
+    <h3 class="list-title">Formularios</h3>
+  </div>
+
+  <div class="list-toolbar">
+
+    <mat-form-field appearance="outline" class="search-field" subscriptSizing="dynamic">
+      <mat-label>Buscar</mat-label>
+
+      <input
+        matInput
+        [ngModel]="filterText()"
+        (ngModelChange)="filterText.set($event)"
+        (keyup.enter)="search()"
+        placeholder="Filtrar..."
+      />
+
+      <button mat-icon-button matSuffix type="button" aria-label="Buscar" (click)="search()">
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <span class="toolbar-spacer"></span>
+
+    <button mat-flat-button color="primary" (click)="navigateNew()">
+      <mat-icon>add</mat-icon>
+      Agregar
+    </button>
+
+    <button mat-stroked-button matTooltip="Actualizar" class="list-refresh-btn" (click)="loadData()" [disabled]="loading()">
+      <mat-icon>refresh</mat-icon>
+      Actualizar
+    </button>
+
+  </div>
+
+  <div class="table-wrapper" [class.loading]="loading()">
+
+    @if (loading()) {
+      <mat-progress-bar mode="indeterminate" />
+    }
+
+    <mat-table [dataSource]="tableData()" class="forms-table">
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef (click)="sort('name')" class="sortable-header">
+          Nombre
+          <mat-icon class="sort-icon" [class.sort-active]="tableParams().sort === 'name'">
+            {{ tableParams().sort === 'name' ? (tableParams().inverse ? 'arrow_downward' : 'arrow_upward') : 'swap_vert' }}
+          </mat-icon>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let form">
+          <a class="code-cell" [routerLink]="['/formularios', 'edit', form.oid]">{{ form.name }}</a>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef (click)="sort('description')" class="sortable-header">
+          Descripción
+          <mat-icon class="sort-icon" [class.sort-active]="tableParams().sort === 'description'">
+            {{ tableParams().sort === 'description' ? (tableParams().inverse ? 'arrow_downward' : 'arrow_upward') : 'swap_vert' }}
+          </mat-icon>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let form">
+          <span class="cell-muted">
+            {{ form.description || '-' }}
+          </span>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="calc">
+        <mat-header-cell *matHeaderCellDef  class="sortable-header">
+          Cálculo
+        </mat-header-cell>
+        <mat-cell *matCellDef="let form">
+          <span class="chip-text">{{ form.calcName || form.group }}</span>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="url">
+        <mat-header-cell *matHeaderCellDef class="sortable-header">URL</mat-header-cell>
+        <mat-cell *matCellDef="let form">
+
+          <button
+            mat-icon-button
+            (click)="copyUrl(form.oid)"
+            matTooltip="Copiar URL pública">
+
+            <mat-icon>content_copy</mat-icon>
+          </button>
+
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef class="col-actions">
+          Acciones
+        </mat-header-cell>
+
+        <mat-cell *matCellDef="let form" class="col-actions">
+
+          <button
+            mat-icon-button
+            matTooltip="Ver detalle"
+            color="primary"
+            (click)="navigateView(form)">
+
+            <mat-icon>visibility</mat-icon>
+          </button>
+
+          <button
+            mat-icon-button
+            color="primary"
+            (click)="navigateEdit(form.oid)"
+            matTooltip="Editar">
+
+            <mat-icon>edit</mat-icon>
+          </button>
+
+          <button
+            mat-icon-button
+            color="warn"
+            (click)="delete(form)"
+            matTooltip="Eliminar">
+            <mat-icon>delete</mat-icon>
+          </button>
+
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+    </mat-table>
+
+    @if (tableData().length === 0 && !loading()) {
+      <div class="empty-state">
+        <mat-icon>description</mat-icon>
+        <span>No hay formularios</span>
+      </div>
+    }
+
+  </div>
+
+  <mat-paginator
+    [length]="total()"
+    [pageIndex]="tableParams().page - 1"
+    [pageSize]="tableParams().size"
+    [pageSizeOptions]="[5, 10, 25]"
+    showFirstLastButtons
+    (page)="changePage($event)">
+  </mat-paginator>
+
+</div>

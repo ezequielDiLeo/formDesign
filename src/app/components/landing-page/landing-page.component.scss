@@ -1,0 +1,91 @@
+/* =========================================================
+   DESIGNER
+   ========================================================= */
+
+.designer-container {
+  display: flex;
+
+  min-height: 100vh;
+  height: auto;
+  width: 100%;
+
+  justify-content: center;
+  font-family: var(--app-body-font, sans-serif);
+  background-color: var(--mat-sys-surface-container-low, #f3f4f6);
+  color: var(--mat-sys-on-surface, #1f2937);
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+
+
+  /* =======================================================
+     PANELS
+     ======================================================= */
+
+  .panel {
+    width: 240px;
+    background: var(--mat-sys-surface-container, #fff);
+    padding: 0 20px 20px 20px;
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow:
+      0 0 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+    border: 1px solid var(--mat-sys-outline-variant, rgba(0, 0, 0, 0.08));
+
+    &.toolbox {
+      border-right: 1px solid var(--mat-sys-outline-variant, #e5e7eb);
+    }
+
+    &.properties {
+      border-left: 1px solid var(--mat-sys-outline-variant, #e5e7eb);
+    }
+
+    h2 {
+      margin-bottom: 1.5rem;
+      color: var(--mat-sys-on-surface, #111827);
+      padding-bottom: 0.5rem;
+      color: #111827;
+    }
+  }
+
+  app-canvas {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+
+/* =========================================================
+   DARK THEME
+   ========================================================= */
+
+:host-context(.mc-dark-theme) {
+
+  .designer-container {
+    background-color: #111827;
+    color: #e5e7eb;
+
+    .panel {
+      background: rgba(17, 24, 39, 0.85);
+      border-color: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+      color: #e5e7eb;
+      &.toolbox {
+        border-right-color: #374151;
+      }
+
+      &.properties {
+        border-left-color: #374151;
+      }
+
+      h2 {
+        color: #f3f4f6;
+      }
+    }
+  }
+}

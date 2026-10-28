@@ -1,0 +1,38 @@
+<div class="designer-container">
+
+  <div class="panel toolbox">
+    <app-toolbox
+      [toolboxSections]="toolboxSections()"
+      [canvasListRef]="canvasListRef()"
+    ></app-toolbox>
+  </div>
+
+  <app-canvas
+    #canvasComponent
+    style="flex: 1; min-width: 0; display: flex; flex-direction: column;"
+    [formModel]="formModel()"
+    [inputFields]="inputFields()"
+    [resultFields]="resultFields()"
+    [selectedField]="selectedField()"
+    [isDarkMode]="isDarkMode()"
+    (dropped)="drop($event)"
+    (fieldSelected)="selectField($event)"
+    (fieldDeleted)="deleteField($event)"
+    (backgroundClicked)="selectBackground($event)"
+    (saveClicked)="save()"
+    (previewClicked)="preview()"
+    (backClicked)="goBack()"
+  ></app-canvas>
+
+  <div class="panel properties">
+    <app-properties
+      [selectedField]="selectedField()"
+      [formModel]="formModel()"
+      [propertiesConfig]="propertiesConfig()"
+      (fieldUpdated)="updateSelectedField($event)"
+      (imageUploaded)="uploadImage($event)"
+      (formUpdated)="formModel.set($event)"
+    ></app-properties>
+  </div>
+
+</div>

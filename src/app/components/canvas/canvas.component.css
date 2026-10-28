@@ -1,0 +1,342 @@
+.canvas-area {
+  flex: 1;
+  min-height: 0;
+  padding: 40px;
+  background-color: var(--mat-sys-surface-container-low, #f8fafc);
+  background-image:
+    linear-gradient(var(--designer-grid-line, rgba(148, 163, 184, .08)) 1px, transparent 1px),
+    linear-gradient(90deg, var(--designer-grid-line, rgba(148, 163, 184, .08)) 1px, transparent 1px);
+  background-size: 24px 24px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+:host-context(body.mc-dark-theme) .canvas-area {
+  --designer-grid-line: rgba(255, 255, 255, .055);
+}
+
+.canvas-header {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.canvas {
+  width: 100%;
+  min-height: 600px;
+  background: white;
+  border-radius: 16px;
+  padding: 40px;
+
+  /* 12-column layout for the form fields */
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-auto-flow: row;
+  grid-auto-rows: min-content;
+  align-content: start;
+  gap: 6px;
+
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  transition: border-color 0.2s;
+  box-shadow:
+    0 10px 30px rgba(15, 23, 42, .08),
+    0 2px 8px rgba(15, 23, 42, .05);
+}
+
+.canvas.cdk-drop-list-dragging {
+  border-color: #164faa;
+  background-color: #ffffff;
+}
+
+.canvas-field {
+  min-width: 0;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0);
+  position: relative;
+  transition: box-shadow 0.16s ease, outline-color 0.16s ease;
+  cursor: grab;
+  animation: fadeIn 0.25s ease;
+  box-sizing: border-box;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.canvas-field:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+}
+
+.canvas-field.cdk-drag-placeholder {
+  opacity: 0.32;
+  border: 1px dashed #64748b;
+  box-shadow: none;
+  animation: none;
+}
+
+.canvas.cdk-drop-list-dragging .canvas-field:not(.cdk-drag-placeholder) {
+  transition: transform 180ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.canvas-field.cdk-drag-dragging {
+  cursor: grabbing;
+  opacity: 0.45;
+  box-shadow: none;
+}
+
+.canvas-field.cdk-drag-preview,
+.canvas-field-preview {
+  animation: none;
+  opacity: 1;
+  border: 1px solid rgba(22, 79, 170, 0.45);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.2);
+  cursor: grabbing;
+}
+
+.canvas-field-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: #334155;
+  background: #fff;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.canvas-field.selected {
+  border: 1px solid transparent;
+  outline: 2px solid var(--mat-sys-primary, #3235ec);
+  outline-offset: -2px;
+  box-shadow:
+    0 0 0 4px rgba(79, 70, 229, .15),
+    0 20px 40px rgba(79, 70, 229, .18);
+  z-index: 999;
+}
+
+.canvas-field label {
+  display: block;
+  font-weight: 500;
+  color: var(--mat-sys-on-surface, #374151);
+  transition: all 0.2s ease;
+}
+
+.canvas-field input:not([matInput]),
+.canvas-field select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--mat-sys-outline, #d1d5db);
+  border-radius: 6px;
+  background-color: #f9fafb;
+  color: var(--mat-sys-on-surface-variant, #6b7280);
+}
+
+.canvas-header button {
+  height: 44px;
+  border-radius: 14px;
+  padding: 0 22px;
+  border: none;
+  font-weight: 600;
+  transition: .2s;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.back-btn {
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  border: 1px solid var(--mat-sys-outline-variant, #e5e7eb);
+  background: var(--mat-sys-surface-container, #fff);
+  color: var(--mat-sys-on-surface, #374151);
+  transition: all .2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .04);
+  overflow: visible;
+}
+
+.back-btn:hover {
+  background: var(--mat-sys-surface-container-high, #f8fafc);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, .08);
+}
+
+.back-btn mat-icon {
+  font-size: 22px;
+  overflow: visible;
+}
+
+.save-btn {
+  background: var(--mat-sys-surface-container, #fff);
+  color: var(--mat-sys-on-surface, #111827);
+  box-shadow: inset 0 0 0 1px var(--mat-sys-outline, #d1d5db);
+}
+
+.save-btn:hover {
+  background-color: var(--mat-sys-surface-container-high, #f3f3f3);
+}
+
+.preview-btn {
+  background: linear-gradient(135deg, #6366f1, #3b82f6);
+  color: white;
+  box-shadow: 0 12px 25px rgba(79, 70, 229, .35);
+}
+
+.preview-btn:hover {
+  box-shadow: 0 18px 35px rgba(79, 70, 229, .45);
+}
+
+.delete-btn {
+  position: absolute;
+  top: -5px;
+  right: 5px;
+  z-index: 1000;
+  background: none;
+  border: none;
+  color: #ef4444;
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
+.canvas-field:hover .delete-btn {
+  opacity: 1;
+}
+
+.canvas-button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease;
+  width: 100%;
+}
+
+.canvas-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, .15);
+}
+
+.cont-flex-result {
+  grid-column: 1 / -1;
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.results-divider {
+  width: 70%;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  padding-top: 20px;
+  border-top: 2px solid var(--mat-sys-outline-variant, #e5e7eb);
+  font-weight: 600;
+  color: #171718;
+  text-align: left;
+}
+
+.result-field input {
+  background: #f3f4f6;
+  font-weight: 600;
+}
+
+.dark-divider {
+  color: var(--mat-sys-on-surface, white);
+}
+
+.image-placeholder {
+  border: 2px dashed #ccc;
+  padding: 40px;
+  text-align: center;
+  color: #888;
+}
+
+.designer-input {
+  background-color: white;
+  color: inherit;
+  border-radius: 5px;
+}
+
+.designer-input:hover {
+  box-shadow: 0 0 10px 1px rgba(23, 41, 201, .664);
+}
+
+/* Forces the next field onto a new Grid row when breakLine is enabled. */
+.grid-break {
+  grid-column: 1 / -1;
+  width: 0;
+  height: 0;
+  min-height: 0;
+  padding: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
+.mat-label {
+  color: var(--mat-sys-on-surface, black);
+}
+
+/* Remove Material's internal field background */
+::ng-deep .mat-mdc-form-field {
+  --field-border-color: #ccc;
+}
+
+::ng-deep .mat-mdc-form-field:not(.field-no-border) .mdc-notched-outline__leading,
+::ng-deep .mat-mdc-form-field:not(.field-no-border) .mdc-notched-outline__trailing {
+  border-color: var(--field-border-color) !important;
+}
+
+::ng-deep .mat-mdc-form-field:not(.field-no-border) .mdc-notched-outline__notch {
+  border-left: none !important;
+  border-right: none !important;
+  border-color: var(--field-border-color) !important;
+}
+
+::ng-deep .mat-mdc-form-field.field-no-border .mdc-notched-outline__leading,
+::ng-deep .mat-mdc-form-field.field-no-border .mdc-notched-outline__notch,
+::ng-deep .mat-mdc-form-field.field-no-border .mdc-notched-outline__trailing {
+  border: none !important;
+}
+
+::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  display: none !important;
+}
+
+::ng-deep .canvas-field .mat-mdc-text-field-wrapper {
+  background-color: transparent !important;
+}
+
+::ng-deep .canvas-field .mdc-text-field {
+  background-color: transparent !important;
+}
+
+::ng-deep .canvas-field .mat-mdc-input-element {
+  background-color: transparent !important;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+:host-context(.mc-dark-theme) .canvas-area {
+  background-color: #1f2937;
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.25),
+    0 2px 8px rgba(0, 0, 0, 0.15);
+}
