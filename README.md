@@ -1,29 +1,29 @@
-# FormDesign
+# 🛠️ CanvasFormFlow | Dynamic Form Builder & Calculation Engine
 
-FormDesign is an Angular form designer. While the production API is unavailable, the application uses a browser-local mock API so the form creation and preview flows can be exercised without external services.
+> ⚠️ **Note on Source Code & NDA:**
+> Due to strict Non-Disclosure Agreements (NDA) and client privacy policies, the core business logic, proprietary calculation services, and real API endpoints have been excluded from this public repository.
+> 
+> As a result, this repository **will not compile locally**. It serves strictly as a portfolio showcase of the frontend architecture, UI/UX design, and Drag & Drop implementation. 
+> 
+> 🚀 **[Experience the fully functional Live Demo here](https://canvasformflow.netlify.app)** (Operating with mock calculation services).
 
-## Run locally
+## 📖 Overview
+CanvasFormFlow is an advanced, interactive Drag & Drop form builder web application. It allows users to visually construct complex forms, map input data to calculation engines, and preview the resulting UI and logic in real-time. 
 
-```bash
-npm install
-npm start
-```
+## ✨ Key Features
+* **Drag & Drop Canvas:** Intuitive interface to build form structures by dragging elements onto a live workspace.
+* **Granular Property Editor:** Customize each component's properties individually (labels, types, validations, and calculation mappings).
+* **Hybrid Components:** Full support for standard user inputs, calculated outputs, and multimedia elements (e.g., image insertion).
+* **Real-time Preview Mode:** Seamlessly toggle between edit mode and a live preview to test interactions and calculations before saving.
+* **Dashboard Management:** A central data grid to view, edit, delete, and manage all created forms, displaying descriptions and assigned calculation types.
+* **Mocked Calculation Engine:** Demonstrates the seamless integration between frontend inputs and backend logic using local mock services.
 
-Open `http://localhost:4200`. Create a form, select the **demo** calculation, save the details, then drag fields from the toolbox onto the canvas. The demo calculation accepts a **monto** and **tasa** and returns **total**. Save the design or open its preview from the editor.
+## 💻 Tech Stack
+* **Core:** Angular 22, TypeScript
+* **Styling & UI:** SCSS
+* **Deployment:** Netlify
 
-Forms, configurations, and uploaded images are stored in the browser's `localStorage` under `form-design.local-api.v1`. They are not sent to a server and are not shared across browsers or devices. The UI displays a local-mode banner to make that limitation clear. Clearing this site's browser data removes the mock records.
-
-The local API preserves the service boundary used by the UI and returns typed errors for invalid input, missing records, unsupported images, and storage failures. Replace `FormsService`'s local implementation with the real API adapter when a backend is available.
-
-## Validation
-
-```bash
-npm run build
-npm test
-```
-
-## Deploy to Netlify
-
-Netlify must publish `dist/form-design/browser`, where Angular writes `index.html`.
-The included `netlify.toml` configures this for Git-based deploys; `npm run deploy`
-uses the same directory for a CLI deploy.
+## 👨‍💻 Author
+**Ezequiel Di Leo**
+* **Portfolio:** [ezequieldileo.vercel.app](https://ezequieldileo.vercel.app)
+* **GitHub:** [@ezequielDiLeo](https://github.com/ezequielDiLeo)
