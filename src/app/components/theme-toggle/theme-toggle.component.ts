@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 
 @Component({
   selector: 'app-theme-toggle',
@@ -6,14 +6,18 @@ import { Component, signal } from '@angular/core';
   templateUrl: './theme-toggle.component.html',
   styleUrl: './theme-toggle.component.scss'
 })
-
-export class ThemeToggleComponent {
-isDark = signal(false);
+export class ThemeToggleComponent implements OnInit {
+  isDark = signal(false);
 
   ngOnInit(): void {
     const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const shouldBeDark = savedTheme ? savedTheme === 'dark' : prefersDark;
+    const prefersDark = window.matchMedia(
+      '(prefers-color-scheme: dark)'
+    ).matches;
+
+    const shouldBeDark = savedTheme
+      ? savedTheme === 'dark'
+      : prefersDark;
 
     this.isDark.set(shouldBeDark);
     this.applyTheme(shouldBeDark);
@@ -21,18 +25,24 @@ isDark = signal(false);
 
   toggleTheme(): void {
     const nextState = !this.isDark();
+
     this.isDark.set(nextState);
     this.applyTheme(nextState);
+
     localStorage.setItem('theme', nextState ? 'dark' : 'light');
   }
 
   private applyTheme(isDark: boolean): void {
-    if (isDark) {
-      document.body.classList.add('mc-dark-theme');
-      document.body.setAttribute('data-theme', 'mc-dark');
-    } else {
-      document.body.classList.remove('mc-dark-theme');
-      document.body.removeAttribute('data-theme');
-    }
+    document.documentElement.classList.toggle(
+      'mc-dark-theme',
+      isDark
+    );
+
+    document.body.classList.toggle('mc-dark-theme', isDark);
+
+    document.body.setAttribute(
+      'data-theme',
+      isDark ? 'mc-dark' : 'light'
+    );
   }
 }

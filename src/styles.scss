@@ -1,13 +1,50 @@
 :root {
   color-scheme: light;
+
   --app-heading-font: Inter, system-ui, sans-serif;
   --app-body-font: Inter, system-ui, sans-serif;
+
   --app-surface: #ffffff;
   --app-background: #f5f7fb;
   --app-text: #172033;
   --app-muted: #697386;
   --app-border: #e2e7ef;
+
+  --app-primary: #1d4ed8;
+  --app-hover: #eff6ff;
+
+  --preview-border: var(--app-border);
+  --preview-control-bg: var(--app-surface);
+  --preview-ink: var(--app-text);
+  --preview-accent: var(--app-primary);
 }
+
+/* =====================================================
+   TEMA OSCURO
+   ===================================================== */
+
+html.mc-dark-theme,
+body.mc-dark-theme {
+  color-scheme: dark;
+
+  --app-surface: #171e2b;
+  --app-background: #0b1120;
+  --app-text: #e5eaf3;
+  --app-muted: #9ba8bc;
+  --app-border: #303b4e;
+
+  --app-primary: #80aaff;
+  --app-hover: #202c40;
+
+  --preview-border: var(--app-border);
+  --preview-control-bg: var(--app-surface);
+  --preview-ink: var(--app-text);
+  --preview-accent: var(--app-primary);
+}
+
+/* =====================================================
+   RESET GLOBAL
+   ===================================================== */
 
 *,
 *::before,
@@ -22,6 +59,10 @@ body {
   font-family: var(--app-body-font);
   color: var(--app-text);
   background: var(--app-background);
+
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
 }
 
 button,
@@ -30,6 +71,10 @@ textarea,
 select {
   font: inherit;
 }
+
+/* =====================================================
+   ANGULAR MATERIAL - SNACKBARS
+   ===================================================== */
 
 .mat-mdc-snack-bar-container.feedback-success {
   --mdc-snackbar-container-color: #166534;
@@ -43,10 +88,97 @@ select {
   --mdc-snackbar-container-color: #1d4ed8;
 }
 
+/* =====================================================
+   BANNER DE MODO LOCAL
+   ===================================================== */
+
 .local-mode-banner {
   padding: 8px 16px;
   color: #713f12;
   background: #fef3c7;
   font-size: 13px;
   text-align: center;
+}
+
+/* =====================================================
+   TRANSICIONES DE SUPERFICIES
+   ===================================================== */
+
+.list-container,
+.list-header,
+.list-toolbar,
+.table-wrapper,
+mat-paginator {
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease;
+}
+
+/* =====================================================
+   ACCESIBILIDAD
+   ===================================================== */
+
+:focus-visible {
+  outline-color: var(--app-primary);
+  outline-offset: 3px;
+}
+/* =====================================================
+   DISEÑADOR DE FORMULARIOS - TEMA OSCURO
+   ===================================================== */
+
+html.mc-dark-theme,
+body.mc-dark-theme {
+  --mat-sys-surface: #171e2b;
+  --mat-sys-surface-container: #171e2b;
+  --mat-sys-surface-container-low: #111827;
+  --mat-sys-surface-container-high: #202c40;
+  --mat-sys-on-surface: #e5eaf3;
+  --mat-sys-on-surface-variant: #9ba8bc;
+  --mat-sys-outline: #46536a;
+  --mat-sys-outline-variant: #303b4e;
+}
+
+/* Área de trabajo */
+html.mc-dark-theme .canvas-area,
+body.mc-dark-theme .canvas-area {
+  background-color: var(--app-background) !important;
+}
+
+/* Grilla de fondo */
+html.mc-dark-theme .canvas-area {
+  --designer-grid-line: rgb(148 163 184 / 12%);
+}
+
+/* Contenedores y tarjetas */
+html.mc-dark-theme .list-container,
+html.mc-dark-theme .form-card,
+html.mc-dark-theme .app-canvas,
+html.mc-dark-theme .app-properties,
+html.mc-dark-theme .app-toolbox {
+  background-color: var(--app-surface);
+  color: var(--app-text);
+  border-color: var(--app-border);
+}
+
+/* Campos Material */
+html.mc-dark-theme .mat-mdc-form-field,
+html.mc-dark-theme .mat-mdc-text-field-wrapper {
+  color: var(--app-text);
+}
+
+/* Textos secundarios */
+html.mc-dark-theme .cell-muted,
+html.mc-dark-theme .mat-mdc-paginator {
+  color: var(--app-muted);
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }

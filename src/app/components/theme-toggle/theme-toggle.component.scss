@@ -1,20 +1,34 @@
 .theme-toggle-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   padding: 10px 16px;
-  border: 1px solid var(--preview-border, #d8e0ea);
+
+  border: 1px solid var(--preview-border);
   border-radius: 12px;
-  background-color: var(--preview-control-bg, #f8fafc);
-  color: var(--preview-ink, #172033);
+
+  background-color: var(--preview-control-bg);
+  color: var(--preview-ink);
+
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 180ms ease;
+
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
 
   &:hover {
-    border-color: var(--preview-accent, #2563eb);
+    border-color: var(--preview-accent);
     transform: translateY(-1px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--preview-accent);
+    outline-offset: 3px;
   }
 
   .icon {
