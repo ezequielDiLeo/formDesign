@@ -318,19 +318,12 @@ export class PreviewLandingComponent {
     };
   }
 
-  getJustifyContent(
-    value?: 'top' | 'center' | 'bottom'
-  ): 'start' | 'center' | 'end' {
-
-    switch (value) {
-      case 'top':
-        return 'start';
-      case 'center':
-        return 'center';
-      case 'bottom':
-        return 'end';
-      default:
-        return 'start';
+  getJustifyContent(field: FormField | null | undefined): string {
+    if (!field) return 'center';
+    switch (field.justifyContent) {
+      case 'top': return 'flex-start';
+      case 'bottom': return 'flex-end';
+      default: return 'center';
     }
   }
 

@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
+import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
 
 @Component({
   selector: 'app-landing-forms-grid',
@@ -31,6 +32,7 @@ import { FormsModule } from '@angular/forms';
     MatProgressBarModule,
     MatTooltipModule,
     RouterLink,
+    ThemeToggleComponent
 ]
 })
 export class LandingFormsGridComponent implements OnInit {

@@ -1,0 +1,49 @@
+<aside class="sidebar" [class.collapsed]="collapsed()">
+  <div class="sidebar-brand">
+    <div class="brand-left">
+      <div class="logo"></div>
+      <h2 class="text-hide">FormFlow</h2>
+    </div>
+
+    <button class="toggle-btn" (click)="toggleSidebar()">
+      <mat-icon>{{ collapsed() ? 'menu' : 'menu_open' }}</mat-icon>
+    </button>
+  </div>
+
+  <nav class="sidebar-nav">
+    <ul>
+      <li
+        routerLink="/dashboard"
+        routerLinkActive="active"
+        [matTooltip]="collapsed() ? 'Dashboard' : ''"
+        matTooltipPosition="right"
+      >
+        <mat-icon class="icon">space_dashboard</mat-icon>
+        <span class="text">Dashboard</span>
+      </li>
+      <li
+        routerLink="/formularios"
+        routerLinkActive="active"
+        [matTooltip]="collapsed() ? 'Mis Formularios' : ''"
+        matTooltipPosition="right"
+      >
+        <mat-icon class="icon">folder</mat-icon>
+        <span class="text">Mis Formularios</span>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="sidebar-footer">
+    <ul>
+      <li
+        routerLink="/configuracion"
+        routerLinkActive="active"
+        [matTooltip]="collapsed() ? 'Configuración' : ''"
+        matTooltipPosition="right"
+      >
+        <mat-icon class="icon">settings</mat-icon>
+        <span class="text">Configuración</span>
+      </li>
+    </ul>
+  </div>
+</aside>

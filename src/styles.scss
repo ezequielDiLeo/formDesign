@@ -1,3 +1,9 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 :root {
   color-scheme: light;
 
@@ -93,11 +99,18 @@ select {
    ===================================================== */
 
 .local-mode-banner {
-  padding: 8px 16px;
-  color: #713f12;
-  background: #fef3c7;
+  position: fixed;
+  bottom: 0;
+  left: 35%;
+  z-index: 9999;
+  width: 30%;
+  padding: 7px 16px;
+  color: #e0c238;
+  background: #36363618;
   font-size: 13px;
   text-align: center;
+  border-bottom: 1px solid #363636ab;
+  border-radius: 14px 14px 0 0;
 }
 
 /* =====================================================

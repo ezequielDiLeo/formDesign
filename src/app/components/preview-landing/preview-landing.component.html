@@ -1,96 +1,73 @@
 <main class="preview-stage">
-  <div
-    class="preview-container"
-    [style.backgroundColor]="formSettings().backgroundColor"
-    [style.padding]="formSettings().padding"
-    [style.maxWidth]="formSettings().maxWidth"
-    [style.borderRadius]="formSettings().borderRadius"
-  >
-    @if (items().length === 0) {
-      <div class="empty-state">
-        No items to display. Go back to Designer and save some fields.
-      </div>
-    }
+<div
+  class="preview-container"
+  [style.backgroundColor]="formSettings().backgroundColor"
+  [style.padding]="formSettings().padding"
+  [style.maxWidth]="formSettings().maxWidth"
+  [style.borderRadius]="formSettings().borderRadius"
+>
+  @if (items().length === 0) {
+    <div class="empty-state">
+      No items to display. Go back to Designer and save some fields.
+    </div>
+  }
 
-    @if (form) {
-      <form [formGroup]="form" (ngSubmit)="executeCalculation()">
-        <div class="form-layout">
+  @if (form) {
+    <form [formGroup]="form" (ngSubmit)="executeCalculation()">
+      <div class="form-layout">
 
-          @for (item of items(); track trackByKey($index, item)) {
-            @if (!item.hidden && (!item.isResult)) {
+        @for (item of items(); track trackByKey($index, item)) {
+          @if (!item.hidden && (!item.isResult)) {
 
-              <div
-                class="preview-field"
-                [class.preview-title-field]="item.type === 'form-title'"
-                [style.minHeight]="getMinHeight(item)"
-                [style.gridColumn]="getFieldGridColumn(item)"
-              >
+            <div
+              class="preview-field"
+              [class.preview-title-field]="item.type === 'form-title'"
+              [style.minHeight]="getMinHeight(item)"
+              [style.gridColumn]="getFieldGridColumn(item)"
+              [style.display]="item.type === 'form-title' ? 'flex' : null"
+              [style.flexDirection]="item.type === 'form-title' ? 'column' : null"
+              [style.justifyContent]="item.type === 'form-title' ? getJustifyContent(item) : null"
+            >
 
-                <ng-container>
-                  @switch (item.type) {
+              <ng-container>
+                @switch (item.type) {
 
-                    <!-- TITLE -->
-                    @case ('form-title') {
-                      <h2
-                        class="preview-form-title"
-                        [style.fontSize]="item.fontSize || '26px'"
-                        [style.color]="item.color || '#111111'"
-                        [style.fontFamily]="item.fontFamily || 'Arial'"
-                        [style.fontWeight]="item.fontWeight || '700'"
-                        [style.textAlign]="item.textAlign || 'center'"
-                        [style.alignSelf]="getJustifyContent(item.justifyContent)"
-                      >
-                      {{ item.label }}
-                      </h2>
-                    }
+                  <!-- TITLE -->
+                @case ('form-title') {
+                  <h2
+                    class="preview-form-title"
+                    [style.display]="'flex'"
+                    [style.flexDirection]="'column'"
+                    [style.justifyContent]="getJustifyContent(item)"
+                    [style.alignItems]="'stretch'"
+                    [style.textAlign]="item.textAlign || 'center'"
+                    [style.width]="'100%'"
+                    [style.height]="'100%'"
+                    [style.margin]="'0'"
+                    [style.padding]="'0'"
+                    [style.boxSizing]="'border-box'"
+                    [style.fontSize]="item.fontSize || '26px'"
+                    [style.color]="item.color || '#111111'"
+                    [style.fontFamily]="item.fontFamily || 'Arial'"
+                    [style.fontWeight]="item.fontWeight || '700'"
+                  >
+                    {{ item.label }}
+                  </h2>
+                }
 
-                  <!-- EMAIL -->
-                  @case ('email') {
-                      @if (item.key && form.get(item.key)) {
-                        <mat-form-field
-                          appearance="outline"
-                          style="width: 100%;"
-                          [class.field-no-border]="item.border === false"
-                          [style.--field-border-color]="item.borderColor || '#ccc'"
-                        >
-                          <mat-label
-                            [style.color]="item.color"
-                            [style.fontSize]="item.fontSize || '20px'"
-                            [style.fontFamily]="item.fontFamily"
-                            [style.fontWeight]="item.fontWeight || '500'"
-                          >
-                            {{ item.label }}
-                          </mat-label>
-
-                          <input
-                            matInput
-                            type="email"
-                            [formControlName]="item.key"
-                            [style.color]="item.inputColor"
-                            [style.fontSize]="item.fontSize || '20px'"
-                            [style.fontFamily]="item.fontFamily"
-                            [style.fontWeight]="item.fontWeight || '500'"
-                            [style.textAlign]="item.textAlign || 'center'"
-                            style="width: 100%;"
-                          />
-                        </mat-form-field>
-                      }
-                    }
-
-                  <!-- TEXT -->
-                  @case ('text') {
+                <!-- EMAIL -->
+                 @case ('email') {
                     @if (item.key && form.get(item.key)) {
                       <mat-form-field
                         appearance="outline"
                         style="width: 100%;"
                         [class.field-no-border]="item.border === false"
-                        [style.--field-border-color]="item.borderColor || '#ccc'"
+                        [style.--field-border-color]="item.borderColor || '#d8e0ea'"
                       >
                         <mat-label
                           [style.color]="item.color"
                           [style.fontSize]="item.fontSize || '20px'"
                           [style.fontFamily]="item.fontFamily"
-                          [style.textAlign]="item.textAlign || 'center'"
                           [style.fontWeight]="item.fontWeight || '500'"
                         >
                           {{ item.label }}
@@ -98,9 +75,8 @@
 
                         <input
                           matInput
-                          type="text"
+                          type="email"
                           [formControlName]="item.key"
-                          [placeholder]="item.placeholder || item.label"
                           [style.color]="item.inputColor"
                           [style.fontSize]="item.fontSize || '20px'"
                           [style.fontFamily]="item.fontFamily"
@@ -110,78 +86,112 @@
                         />
                       </mat-form-field>
                     }
+                  }
 
-                    @if (!item.key && !item.fromCalculation) {
-                      <p
-                        class="text-content"
+                <!-- TEXT -->
+                @case ('text') {
+                  @if (item.key && form.get(item.key)) {
+                    <mat-form-field
+                      appearance="outline"
+                      style="width: 100%;"
+                      [class.field-no-border]="item.border === false"
+                      [style.--field-border-color]="item.borderColor || '#ccc'"
+                    >
+                      <mat-label
+                        [style.color]="item.color"
                         [style.fontSize]="item.fontSize || '20px'"
-                        [style.color]="item.inputColor || '#111111'"
-                        [style.fontFamily]="item.fontFamily || 'Arial'"
+                        [style.fontFamily]="item.fontFamily"
                         [style.textAlign]="item.textAlign || 'center'"
                         [style.fontWeight]="item.fontWeight || '500'"
-                        [style.width]="'100%'"
-                        [style.display]="'grid'"
-                        [style.gridTemplateRows]="'minmax(0, 1fr)'"
-                        [style.alignContent]="getJustifyContent(item.justifyContent)"
-                        style="margin: 0; height: 100%;"
                       >
                         {{ item.label }}
-                      </p>
-                    }
+                      </mat-label>
 
+                      <input
+                        matInput
+                        type="text"
+                        [formControlName]="item.key"
+                        [style.color]="item.inputColor"
+                        [style.fontSize]="item.fontSize || '20px'"
+                        [style.fontFamily]="item.fontFamily"
+                        [style.fontWeight]="item.fontWeight || '500'"
+                        [style.textAlign]="item.textAlign || 'center'"
+                        style="width: 100%;"
+                      />
+                    </mat-form-field>
                   }
 
-                  <!-- NUMBER -->
-                  @case ('number') {
-                    @if (item.key && form.get(item.key)) {
-                      <mat-form-field
-                        appearance="outline"
-                        style="width: 100%;"
-                        [class.field-no-border]="item.border === false"
-                        [style.--field-border-color]="item.borderColor || '#ccc'"
-                      >
-                        <mat-label
-                          [style.color]="item.color"
-                          [style.fontSize]="item.fontSize || '20px'"
-                          [style.fontFamily]="item.fontFamily"
-                          [style.fontWeight]="item.fontWeight || '500'"
-                        >
-                          {{ item.label }}
-                        </mat-label>
-
-                        <input
-                          matInput
-                          type="number"
-                          [formControlName]="item.key"
-                          [style.color]="item.inputColor"
-                          [style.fontSize]="item.fontSize || '20px'"
-                          [style.fontFamily]="item.fontFamily"
-                          [style.fontWeight]="item.fontWeight || '500'"
-                          [style.textAlign]="item.textAlign || 'center'"
-                          style="width: 100%;"
-                        />
-                      </mat-form-field>
-                    }
+                  @if (!item.key && !item.fromCalculation) {
+                    <p
+                      class="text-content"
+                      [style.fontSize]="item.fontSize || '20px'"
+                      [style.color]="item.inputColor || '#111111'"
+                      [style.fontFamily]="item.fontFamily || 'Arial'"
+                      [style.textAlign]="item.textAlign || 'center'"
+                      [style.fontWeight]="item.fontWeight || '500'"
+                      [style.width]="'100%'"
+                      [style.display]="'grid'"
+                      [style.gridTemplateRows]="'minmax(0, 1fr)'"
+                      [style.alignContent]="getJustifyContent(item)"
+                      style="margin: 0; height: 100%;"
+                    >
+                      {{ item.label }}
+                    </p>
                   }
 
-                  <!-- DATE -->
-                  @case ('date') {
-                    @if (item.key && form.get(item.key)) {
-                      <mat-form-field
-                        appearance="outline"
-                        style="width: 100%;"
-                        [class.field-no-border]="item.border === false"
-                        [style.--field-border-color]="item.borderColor || '#ffff'"
-                      >
-                        <mat-label
-                          [style.color]="item.color"
-                          [style.fontSize]="item.fontSize || '20px'"
-                          [style.fontFamily]="item.fontFamily"
-                          [style.fontWeight]="item.fontWeight || '500'"
-                        >
-                          {{ item.label }}
-                        </mat-label>
+                }
 
+                <!-- NUMBER -->
+                @case ('number') {
+                  @if (item.key && form.get(item.key)) {
+                    <mat-form-field
+                      appearance="outline"
+                      style="width: 100%;"
+                      [class.field-no-border]="item.border === false"
+                      [style.--field-border-color]="item.borderColor || '#ccc'"
+                    >
+                      <mat-label
+                        [style.color]="item.color"
+                        [style.fontSize]="item.fontSize || '20px'"
+                        [style.fontFamily]="item.fontFamily"
+                        [style.fontWeight]="item.fontWeight || '500'"
+                      >
+                        {{ item.label }}
+                      </mat-label>
+
+                      <input
+                        matInput
+                        type="number"
+                        [formControlName]="item.key"
+                        [style.color]="item.inputColor"
+                        [style.fontSize]="item.fontSize || '20px'"
+                        [style.fontFamily]="item.fontFamily"
+                        [style.fontWeight]="item.fontWeight || '500'"
+                        [style.textAlign]="item.textAlign || 'center'"
+                        style="width: 100%;"
+                      />
+                    </mat-form-field>
+                  }
+                }
+
+                <!-- DATE -->
+                @case ('date') {
+                    <mat-form-field
+                      appearance="outline"
+                      style="width: 100%;"
+                      [class.field-no-border]="item.border === false"
+                      [style.--field-border-color]="item.borderColor || '#d8e0ea'"
+                    >
+                      <mat-label
+                        [style.fontSize]="item.fontSize || '20px'"
+                        [style.fontFamily]="item.fontFamily"
+                        [style.fontWeight]="item.fontWeight || '500'"
+                        [style.color]="item.color || '#000000'"
+                      >
+                        {{ item.label }}
+                      </mat-label>
+
+                      @if (item.key && form.get(item.key)) {
                         <input
                           matInput
                           [matDatepicker]="previewPicker"
@@ -193,231 +203,243 @@
                           [style.textAlign]="item.textAlign || 'center'"
                           style="width: 100%;"
                         />
-
-                        <mat-datepicker-toggle
-                          matIconSuffix
-                          [for]="previewPicker">
-                        </mat-datepicker-toggle>
-
-                        <mat-datepicker #previewPicker></mat-datepicker>
-                      </mat-form-field>
-                    }
-                  }
-
-                  <!-- SELECT -->
-                  @case ('select') {
-                    @if (item.key && form.get(item.key)) {
-                      <mat-form-field
-                        appearance="outline"
-                        style="width: 100%;"
-                        [class.field-no-border]="item.border === false"
-                        [style.--field-border-color]="item.borderColor || '#ccc'"
-                      >
-                        <mat-label
-                          [style.color]="item.color"
-                          [style.fontSize]="item.fontSize || '20px'"
-                          [style.fontFamily]="item.fontFamily"
-                          [style.fontWeight]="item.fontWeight || '500'"
-                        >
-                          {{ item.label }}
-                        </mat-label>
-
-                        <mat-select
-                          [formControlName]="item.key"
+                      } @else {
+                        <input
+                          matInput
+                          [matDatepicker]="previewPicker"
                           [style.color]="item.inputColor"
                           [style.fontSize]="item.fontSize || '20px'"
                           [style.fontFamily]="item.fontFamily"
                           [style.fontWeight]="item.fontWeight || '500'"
                           [style.textAlign]="item.textAlign || 'center'"
-                        >
-                          <mat-option [value]="null">
-                            -- Seleccione --
-                          </mat-option>
-
-                          @for (opt of item.values ?? []; track $index) {
-                            <mat-option [value]="opt.value">
-                              {{ opt.name }}
-                            </mat-option>
-                          }
-                        </mat-select>
-                      </mat-form-field>
-                    }
-                  }
-
-
-                  <!-- LINE -->
-                  @case ('line') {
-                    <div
-                      [style.width]="'100%'"
-                      [style.margin]="'10px 0'"
-                      [style.borderTopWidth]="item.height || '2px'"
-                      [style.borderTopStyle]="item.borderStyle || 'solid'"
-                      [style.borderTopColor]="item.color || '#000'"
-                      style="
-                        width: 100%;
-                        height: 0;
-                        margin: 10px 0;
-                      ">
-                    </div>
-                  }
-
-                  <!-- IMAGE -->
-                  @case ('image') {
-                    <div>
-                      @if (imageUrls()[item.fileId!]) {
-                        <img
-                          [src]="imageUrls()[item.fileId!]"
-                          [style.height]="item.imageHeight || '200px'"
-                          [style.object-fit]="item.objectFit || 'cover'"
-                          [style.border-radius]="item.borderRadius || '6px'"
-                          style="width:100%;"
+                          style="width: 100%;"
                         />
-                      } @else {
-                        <div class="image-placeholder">
-                          Sin imagen
-                        </div>
                       }
-                    </div>
 
-                  }
+                      <mat-datepicker-toggle
+                        matIconSuffix
+                        [for]="previewPicker">
+                      </mat-datepicker-toggle>
 
-                  <!-- BUTTON -->
-                  @case ('button') {
-                    <div style="display:grid; place-items:center;">
-                      <button
-                        type="submit"
-                        class="preview-button"
-                        [style.backgroundColor]="item.backgroundColor || '#2563eb'"
-                        [style.color]="item.color || '#ffffff'"
+                      <mat-datepicker #previewPicker></mat-datepicker>
+                    </mat-form-field>
+
+                }
+
+                <!-- SELECT -->
+                @case ('select') {
+                  @if (item.key && form.get(item.key)) {
+                    <mat-form-field
+                      appearance="outline"
+                      style="width: 100%;"
+                      [class.field-no-border]="item.border === false"
+                      [style.--field-border-color]="item.borderColor || '#ccc'"
+                    >
+                      <mat-label
+                        [style.color]="item.color"
                         [style.fontSize]="item.fontSize || '20px'"
-                        [style.fontFamily]="item.fontFamily || 'Arial'"
+                        [style.fontFamily]="item.fontFamily"
                         [style.fontWeight]="item.fontWeight || '500'"
-                        [style.borderRadius]="formSettings().borderRadius || '4px'"
-                        [style.border]="item.border === false ? 'none' : '1px solid ' + (item.borderColor || '#ccc')"
-                        [style.textAlign]="item.textAlign || 'center'"
-                        style="width: 100%; box-sizing: border-box;"
                       >
                         {{ item.label }}
-                      </button>
-                    </div>
-                  }
+                      </mat-label>
 
-                  @case ('checkbox') {
-                    <div
-                      class="checkbox"
-                      style="display:grid; grid-template-columns:max-content max-content; width:100%;"
-                      [style.justifyContent]="
-                        item.textAlign === 'left'
-                          ? 'start'
-                          : item.textAlign === 'right'
-                            ? 'end'
-                            : 'center'
-                      "
-                    >
-                      @if (item.key && form.get(item.key)) {
-                        <span
-                            [style.color]="item.color"
-                            [style.fontSize]="item.fontSize"
-                            [style.fontFamily]="item.fontFamily"
-                            [style.fontWeight]="item.fontWeight"
-                          >
-                            {{ item.label }}
-                          </span>
-                        <mat-slide-toggle
-                          [formControlName]="item.key"
+                      <mat-select
+                        [formControlName]="item.key"
+                        [style.color]="item.inputColor"
+                        [style.fontSize]="item.fontSize || '20px'"
+                        [style.fontFamily]="item.fontFamily"
+                        [style.fontWeight]="item.fontWeight || '500'"
+                        [style.textAlign]="item.textAlign || 'center'"
+                      >
+                        <mat-option [value]="null">
+                          -- Seleccione --
+                        </mat-option>
+
+                        @for (opt of item.values ?? []; track $index) {
+                          <mat-option [value]="opt.value">
+                            {{ opt.name }}
+                          </mat-option>
+                        }
+                      </mat-select>
+                    </mat-form-field>
+                  }
+                }
+
+
+                <!-- LINE -->
+                 @case ('line') {
+                   <div
+                     [style.width]="'100%'"
+                     [style.margin]="'10px 0'"
+                     [style.borderTopWidth]="item.height || '2px'"
+                     [style.borderTopStyle]="item.borderStyle || 'solid'"
+                     [style.borderTopColor]="item.color || '#000'"
+                     style="
+                       width: 100%;
+                       height: 0;
+                       margin: 10px 0;
+                     ">
+                   </div>
+                 }
+
+                <!-- IMAGE -->
+                 @case ('image') {
+                   <div>
+                     @if (imageUrls()[item.fileId!]) {
+                       <img
+                         [src]="imageUrls()[item.fileId!]"
+                         [style.height]="item.imageHeight || '200px'"
+                         [style.object-fit]="item.objectFit || 'cover'"
+                         [style.border-radius]="item.borderRadius || '6px'"
+                         style="width:100%;"
+                       />
+                     } @else {
+                       <div class="image-placeholder">
+                         Sin imagen
+                       </div>
+                     }
+                   </div>
+
+                 }
+
+                <!-- BUTTON -->
+                 @case ('button') {
+                   <div style="display:grid; place-items:center;">
+                     <button
+                       type="submit"
+                       class="preview-button"
+                       [style.backgroundColor]="item.backgroundColor || '#2563eb'"
+                       [style.color]="item.color || '#ffffff'"
+                       [style.fontSize]="item.fontSize || '20px'"
+                       [style.fontFamily]="item.fontFamily || 'Arial'"
+                       [style.fontWeight]="item.fontWeight || '500'"
+                       [style.borderRadius]="formSettings().borderRadius || '4px'"
+                       [style.border]="item.border === false ? 'none' : '1px solid ' + (item.borderColor || '#ccc')"
+                       [style.textAlign]="item.textAlign || 'center'"
+                       style="width: 100%; box-sizing: border-box;"
+                     >
+                       {{ item.label }}
+                     </button>
+                   </div>
+                 }
+
+                 @case ('checkbox') {
+                  <div
+                    class="checkbox"
+                    style="display:grid; grid-template-columns:max-content max-content; width:100%;"
+                    [style.justifyContent]="
+                      item.textAlign === 'left'
+                        ? 'start'
+                        : item.textAlign === 'right'
+                          ? 'end'
+                          : 'center'
+                    "
+                  >
+                    @if (item.key && form.get(item.key)) {
+                      <span
                           [style.color]="item.color"
                           [style.fontSize]="item.fontSize"
                           [style.fontFamily]="item.fontFamily"
                           [style.fontWeight]="item.fontWeight"
                         >
-                        </mat-slide-toggle>
-                      }
-                    </div>
-                  }
-
-                  }
-
-                </ng-container>
-
-                @if (item.key && form.get(item.key)?.touched) {
-
-                  @if (form.get(item.key)?.errors?.['required']) {
-                    <div class="input-error-text">Campo obligatorio</div>
-                  }
-
-                  @if (form.get(item.key)?.errors?.['email']) {
-                    <div class="input-error-text">Email inválido</div>
-                  }
-
-                  @if (form.get(item.key)?.errors?.['min']) {
-                    <div class="input-error-text">Valor mínimo inválido</div>
-                  }
-
-                  @if (form.get(item.key)?.errors?.['max']) {
-                    <div class="input-error-text">Valor máximo inválido</div>
-                  }
-
-                  @if (form.get(item.key)?.errors?.['pattern']) {
-                    <div class="input-error-text">Formato inválido</div>
-                  }
+                          {{ item.label }}
+                        </span>
+                      <mat-slide-toggle
+                        [formControlName]="item.key"
+                        [style.color]="item.color"
+                        [style.fontSize]="item.fontSize"
+                        [style.fontFamily]="item.fontFamily"
+                        [style.fontWeight]="item.fontWeight"
+                      >
+                      </mat-slide-toggle>
+                    }
+                  </div>
+                }
 
                 }
 
-              </div>
+              </ng-container>
 
+              @if (item.key && form.get(item.key)?.touched) {
+
+                @if (form.get(item.key)?.errors?.['required']) {
+                  <div class="input-error-text">Campo obligatorio</div>
+                }
+
+                @if (form.get(item.key)?.errors?.['email']) {
+                  <div class="input-error-text">Email inválido</div>
+                }
+
+                @if (form.get(item.key)?.errors?.['min']) {
+                  <div class="input-error-text">Valor mínimo inválido</div>
+                }
+
+                @if (form.get(item.key)?.errors?.['max']) {
+                  <div class="input-error-text">Valor máximo inválido</div>
+                }
+
+                @if (form.get(item.key)?.errors?.['pattern']) {
+                  <div class="input-error-text">Formato inválido</div>
+                }
+
+              }
+
+            </div>
+
+          }
+
+          @if (item.breakLine) {
+            <div class="grid-break" aria-hidden="true"></div>
+          }
+        }
+
+      </div>
+
+      @if (resultsVisible()) {
+        <div class="results-container" #resultsSection>
+          @if (resultsVisible()) {
+
+            <div class="results-divider">
+              Resultados
+            </div>
+
+            @for (item of items(); track $index) {
+              @if (!item.hidden && item.isResult) {
+
+                <div
+                  class="preview-field result-field"
+                  [style.gridColumn]="getFieldGridColumn(item)"
+                >
+
+                  <label
+                    [style.color]="item.color"
+                    [style.fontSize]="item.fontSize"
+                    [style.fontFamily]="item.fontFamily"
+                    style="margin-bottom:4px;"
+                  >
+                    {{ item.label }}
+                  </label>
+
+                  <input
+                    type="text"
+                    class="preview-input"
+                    [value]="item.value"
+                    readonly
+                    [ngStyle]="getInputStyles(item)"
+                  />
+
+                </div>
+
+              }
             }
 
-            @if (item.breakLine) {
-              <div class="grid-break" aria-hidden="true"></div>
-            }
           }
 
         </div>
+      }
 
-        @if (resultsVisible()) {
-          <div class="results-container" #resultsSection>
-            @if (resultsVisible()) {
-
-              <div class="results-divider">
-                Resultados
-              </div>
-
-              @for (item of items(); track $index) {
-                @if (!item.hidden && item.isResult) {
-
-                  <div
-                    class="preview-field result-field"
-                    [style.gridColumn]="getFieldGridColumn(item)"
-                  >
-
-                    <label
-                      [style.color]="item.color"
-                      [style.fontSize]="item.fontSize"
-                      [style.fontFamily]="item.fontFamily"
-                      style="margin-bottom:4px;"
-                    >
-                      {{ item.label }}
-                    </label>
-
-                    <input
-                      type="text"
-                      class="preview-input"
-                      [value]="item.value"
-                      readonly
-                      [ngStyle]="getInputStyles(item)"
-                    />
-
-                  </div>
-
-                }
-              }
-
-            }
-
-          </div>
-        }
-
-      </form>
-    }
-  </div>
+    </form>
+  }
+</div>
 </main>
