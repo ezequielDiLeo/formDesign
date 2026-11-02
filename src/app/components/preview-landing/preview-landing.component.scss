@@ -71,10 +71,10 @@
 
 // 3. GRILLAS Y LAYOUT
 .form-layout {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  align-content: start;
-  gap: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 6px;
 }
 
 .preview-field {
@@ -87,9 +87,9 @@
   }
 }
 
-.grid-break {
-  grid-column: 1 / -1;
-  width: 0;
+.flex-break {
+  flex: 0 0 100%;
+  width: 100%;
   height: 0;
 }
 

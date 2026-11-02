@@ -653,6 +653,102 @@ export class LandingPageComponent implements OnInit {
     }));
   }
 
+
+  applyTemplate(template: 'brisa' | 'editorial' | 'naturaleza') {
+    const themes = {
+      brisa: {
+        settings: { backgroundColor: '#eff7fb', padding: '32px', maxWidth: '900px', borderRadius: '20px' },
+        colors: { title: '#1e4054', label: '#31596d', input: '#203847', border: '#b8d3df', accent: '#287c91' },
+        fontFamily: 'Lato',
+        layout: ['50%', '50%', '100%']
+      },
+      editorial: {
+        settings: { backgroundColor: '#fff9f2', padding: '38px', maxWidth: '760px', borderRadius: '10px' },
+        colors: { title: '#533c2e', label: '#76533d', input: '#3e3028', border: '#d9bea5', accent: '#986243' },
+        fontFamily: 'Playfair Display',
+        layout: ['100%']
+      },
+      naturaleza: {
+        settings: { backgroundColor: '#f1f7f0', padding: '32px', maxWidth: '880px', borderRadius: '20px' },
+        colors: { title: '#294536', label: '#496451', input: '#2c3d32', border: '#a9c1a8', accent: '#547a57' },
+        fontFamily: 'Montserrat',
+        layout: ['66%', '33%']
+      }
+    } as const;
+    const theme = themes[template];
+    let fields = this.formModel().fields.filter(field => !field.templateGenerated);
+    let layoutIndex = 0;
+
+    fields = fields.map(field => {
+      const isTitle = field.type === 'form-title';
+      const isLine = field.type === 'line';
+      const isImage = field.type === 'image';
+      const isButton = field.type === 'button';
+      const width = isTitle || isLine || isImage || isButton
+        ? '100%'
+        : theme.layout[layoutIndex++ % theme.layout.length];
+
+      const updated: FormField = {
+        ...field,
+        width,
+        containerAlign: width === '100%' ? 'left' : 'center',
+        color: isTitle ? theme.colors.title : theme.colors.label,
+        inputColor: theme.colors.input,
+        fontFamily: theme.fontFamily,
+        fontSize: isTitle ? (template === 'editorial' ? '32px' : '34px') : isButton ? '16px' : '16px',
+        fontWeight: isTitle ? '700' : isButton ? '600' : '500',
+        textAlign: isTitle ? 'left' : field.textAlign || 'left',
+        borderColor: theme.colors.border,
+        border: isLine ? field.border : true,
+        borderStyle: isLine ? (template === 'editorial' ? 'dashed' : 'solid') : field.borderStyle,
+        backgroundColor: isButton ? theme.colors.accent : field.backgroundColor,
+        borderRadius: isButton ? (template === 'editorial' ? '6px' : '10px') : field.borderRadius,
+        breakLine: isButton
+      };
+
+      if (isImage) {
+        updated.imageHeight = template === 'editorial' ? '120px' : '180px';
+        updated.objectFit = 'cover';
+        updated.borderRadius = '14px';
+        if (!field.fileId && !field.src) {
+          updated.src = '/assets/img/form-template-photo.svg';
+        }
+      }
+
+      return updated;
+    });
+
+    if (template === 'naturaleza') {
+      const imageIndex = fields.findIndex(field => field.type === 'image');
+      if (imageIndex < 0) {
+        const imageField: FormField = {
+          id: crypto.randomUUID(),
+          type: 'image',
+          label: 'Imagen destacada',
+          width: '100%',
+          imageHeight: '180px',
+          objectFit: 'cover',
+          borderRadius: '14px',
+          src: '/assets/img/form-template-photo.svg',
+          fileName: 'Imagen de portada',
+          templateGenerated: true,
+          deletable: true
+        };
+        fields.unshift(imageField);
+      } else if (imageIndex > 0) {
+        const [imageField] = fields.splice(imageIndex, 1);
+        fields.unshift(imageField);
+      }
+    }
+
+    this.formModel.set({
+      ...this.formModel(),
+      settings: { ...this.formModel().settings, ...theme.settings },
+      fields
+    });
+    this.selectedField.set(null);
+  }
+
   deleteField(field: FormField) {
     if (field.tempSrc) URL.revokeObjectURL(field.tempSrc);
     this.formModel.update(m => ({

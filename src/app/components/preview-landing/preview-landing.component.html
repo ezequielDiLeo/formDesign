@@ -23,7 +23,8 @@
               class="preview-field"
               [class.preview-title-field]="item.type === 'form-title'"
               [style.minHeight]="getMinHeight(item)"
-              [style.gridColumn]="getFieldGridColumn(item)"
+              [style.width]="getFieldWidth(item.width)"
+              [style.margin]="getContainerStyle(item)"
               [style.display]="item.type === 'form-title' ? 'flex' : null"
               [style.flexDirection]="item.type === 'form-title' ? 'column' : null"
               [style.justifyContent]="item.type === 'form-title' ? getJustifyContent(item) : null"
@@ -33,27 +34,27 @@
                 @switch (item.type) {
 
                   <!-- TITLE -->
-                @case ('form-title') {
-                  <h2
-                    class="preview-form-title"
-                    [style.display]="'flex'"
-                    [style.flexDirection]="'column'"
-                    [style.justifyContent]="getJustifyContent(item)"
-                    [style.alignItems]="'stretch'"
-                    [style.textAlign]="item.textAlign || 'center'"
-                    [style.width]="'100%'"
-                    [style.height]="'100%'"
-                    [style.margin]="'0'"
-                    [style.padding]="'0'"
-                    [style.boxSizing]="'border-box'"
-                    [style.fontSize]="item.fontSize || '26px'"
-                    [style.color]="item.color || '#111111'"
-                    [style.fontFamily]="item.fontFamily || 'Arial'"
-                    [style.fontWeight]="item.fontWeight || '700'"
-                  >
-                    {{ item.label }}
-                  </h2>
-                }
+                  @case ('form-title') {
+                    <h2
+                      class="preview-form-title"
+                      [style.display]="'flex'"
+                      [style.flexDirection]="'column'"
+                      [style.justifyContent]="getJustifyContent(item)"
+                      [style.alignItems]="'stretch'"
+                      [style.textAlign]="item.textAlign || 'center'"
+                      [style.width]="'100%'"
+                      [style.height]="'100%'"
+                      [style.margin]="'0'"
+                      [style.padding]="'0'"
+                      [style.boxSizing]="'border-box'"
+                      [style.fontSize]="item.fontSize || '26px'"
+                      [style.color]="item.color || '#111111'"
+                      [style.fontFamily]="item.fontFamily || 'Arial'"
+                      [style.fontWeight]="item.fontWeight || '700'"
+                    >
+                      {{ item.label }}
+                    </h2>
+                  }
 
                 <!-- EMAIL -->
                  @case ('email') {
@@ -286,9 +287,9 @@
                 <!-- IMAGE -->
                  @case ('image') {
                    <div>
-                     @if (imageUrls()[item.fileId!]) {
+                     @if (imageUrls()[item.fileId!] || item.src) {
                        <img
-                         [src]="imageUrls()[item.fileId!]"
+                         [src]="imageUrls()[item.fileId!] || item.src"
                          [style.height]="item.imageHeight || '200px'"
                          [style.object-fit]="item.objectFit || 'cover'"
                          [style.border-radius]="item.borderRadius || '6px'"
@@ -390,7 +391,7 @@
           }
 
           @if (item.breakLine) {
-            <div class="grid-break" aria-hidden="true"></div>
+            <div class="flex-break" aria-hidden="true"></div>
           }
         }
 

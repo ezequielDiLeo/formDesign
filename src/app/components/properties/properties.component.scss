@@ -50,6 +50,13 @@
     }
   }
 
+
+  textarea {
+    min-height: 90px;
+    resize: vertical;
+    font-family: inherit;
+  }
+
   select {
     appearance: none;
     cursor: pointer;

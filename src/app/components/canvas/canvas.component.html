@@ -1,9 +1,87 @@
 <div class="canvas-area">
   <div class="canvas-header">
     <button class="btn back-btn" (click)="backClicked.emit()"><mat-icon>arrow_back</mat-icon></button>
+    <button class="template-btn" (click)="showTemplates.set(true)">
+      <mat-icon>dashboard_customize</mat-icon>
+      Plantillas
+    </button>
     <button class="save-btn" (click)="saveClicked.emit()">Guardar</button>
     <button class="preview-btn" (click)="previewClicked.emit()">Previsualizar</button>
   </div>
+
+
+  @if (showTemplates()) {
+    <div class="template-backdrop" (click)="showTemplates.set(false)">
+      <section
+        class="template-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="template-dialog-title"
+        (click)="$event.stopPropagation()"
+      >
+        <div class="template-dialog-header">
+          <div>
+            <p class="template-eyebrow">DISEÑO DEL FORMULARIO</p>
+            <h2 id="template-dialog-title">Elegí una plantilla</h2>
+            <p>Se conservan los campos y sus datos; podés seguir editando todo después.</p>
+          </div>
+          <button class="template-close" type="button" aria-label="Cerrar" (click)="showTemplates.set(false)">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+
+        <div class="template-grid">
+          @for (template of templates; track template.id) {
+            <button
+              class="template-card"
+              type="button"
+              (click)="templateSelected.emit(template.id); showTemplates.set(false)"
+            >
+              <div class="template-preview" [ngClass]="template.previewClass">
+                @if (template.hasPhoto) {
+                  <img class="template-photo" src="/assets/img/form-template-photo.svg" alt="" />
+                }
+                <h3>{{ getPreviewTitle() }}</h3>
+                <div class="template-preview-fields">
+                  @for (field of getPreviewFields(); track field.id; let index = $index) {
+                    <div class="template-preview-field" [class.preview-field-wide]="template.id === 'editorial' || index === 2">
+                      <span>{{ field.label }}</span>
+                      <div></div>
+                    </div>
+                    @if (template.id === 'brisa' && index === 0 && getPreviewFields().length === 1) {
+                      <div class="template-preview-field">
+                        <span>Campo de entrada</span>
+                        <div></div>
+                      </div>
+                    }
+                  } @empty {
+                    @if (template.id === 'brisa') {
+                      <div class="template-preview-field">
+                        <span>Campo de entrada</span>
+                        <div></div>
+                      </div>
+                      <div class="template-preview-field">
+                        <span>Campo de entrada</span>
+                        <div></div>
+                      </div>
+                    } @else {
+                      <div class="template-preview-field preview-field-wide">
+                        <span>Campo de entrada</span>
+                        <div></div>
+                      </div>
+                    }
+                  }
+                </div>
+                <div class="template-preview-action">Calcular</div>
+              </div>
+              <span class="template-card-name">{{ template.name }}</span>
+              <span class="template-card-description">{{ template.description }}</span>
+            </button>
+          }
+        </div>
+      </section>
+    </div>
+  }
 
   <div
     cdkDropList
@@ -26,7 +104,8 @@
         [cdkDragDisabled]="item.isResult"
         class="canvas-field"
         [attr.data-field-id]="item.id"
-        [style.gridColumn]="getFieldGridColumn(item)"
+        [style.width]="getFieldWidth(item.width)"
+        [style.margin]="getContainerStyle(item)"
         [style.textAlign]="item.textAlign"
         [style.justifyContent]="getJustifyContent(item)"
         [class.selected]="selectedField()?.id === item.id"
@@ -377,7 +456,7 @@
       </div>
 
       @if (item.breakLine) {
-        <div class="grid-break" aria-hidden="true"></div>
+        <div class="flex-break" aria-hidden="true"></div>
       }
     }
 

@@ -15,7 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { getFormFieldGridColumn } from '../../utils/form-grid-layout.util';
+import { getFormFieldGridColumn, getFormFieldMargin, getFormFieldWidth } from '../../utils/form-grid-layout.util';
 @Component({
   selector: 'app-preview-landing',
   standalone: true,
@@ -329,6 +329,14 @@ export class PreviewLandingComponent {
 
   getFieldGridColumn(item: FormField): string {
     return getFormFieldGridColumn(item);
+  }
+
+  getFieldWidth(width?: string): string {
+    return getFormFieldWidth(width);
+  }
+
+  getContainerStyle(item: FormField): string {
+    return getFormFieldMargin(item);
   }
 
   private calcMinHeight(

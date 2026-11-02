@@ -38,6 +38,15 @@
           />
         }
 
+
+        @if (prop.type === 'textarea') {
+          <textarea
+            rows="4"
+            [ngModel]="selectedField[prop.key]"
+            (ngModelChange)="updateField(prop.key, $event)"
+          ></textarea>
+        }
+
         @if (prop.type === 'select') {
           <select
             [ngModel]="selectedField[prop.key] ?? getFirstOption(prop.options)"

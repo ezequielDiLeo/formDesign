@@ -1,4 +1,4 @@
-import { Component, input, output, viewChild } from '@angular/core';
+import { Component, input, output, signal, viewChild } from '@angular/core';
 import { CdkDropList, CdkDragDrop, CdkDragPreview, DragDropModule } from '@angular/cdk/drag-drop';
 import { FormField, FormModel } from '../../model/form-field.model';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,7 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { provideNativeDateAdapter, MatOption } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
-import { getFormFieldGridColumn } from '../../utils/form-grid-layout.util';
+import { getFormFieldMargin, getFormFieldWidth } from '../../utils/form-grid-layout.util';
 
 @Component({
   selector: 'app-canvas',
@@ -47,8 +47,46 @@ export class CanvasComponent {
   readonly saveClicked = output<void>();
   readonly previewClicked = output<void>();
   readonly backClicked = output<void>();
+  readonly templateSelected = output<'brisa' | 'editorial' | 'naturaleza'>();
+
 
   readonly canvasList = viewChild.required<CdkDropList>('canvasList');
+
+  readonly showTemplates = signal(false);
+
+  readonly templates = [
+    {
+      id: 'brisa' as const,
+      name: 'Brisa',
+      description: 'Diseño luminoso en dos columnas y tonos azules.',
+      previewClass: 'template-preview--brisa',
+      hasPhoto: false
+    },
+    {
+      id: 'editorial' as const,
+      name: 'Editorial',
+      description: 'Composición vertical, cálida y con tipografía elegante.',
+      previewClass: 'template-preview--editorial',
+      hasPhoto: false
+    },
+    {
+      id: 'naturaleza' as const,
+      name: 'Naturaleza',
+      description: 'Imagen destacada, tonos verdes y campos de distinto tamaño.',
+      previewClass: 'template-preview--naturaleza',
+      hasPhoto: true
+    }
+  ];
+
+  getPreviewFields(): FormField[] {
+    return this.inputFields()
+      .filter(field => !['form-title', 'line', 'image', 'button'].includes(field.type))
+      .slice(0, 3);
+  }
+
+  getPreviewTitle(): string {
+    return this.inputFields().find(field => field.type === 'form-title')?.label || 'Tu formulario';
+  }
 
   private calcMinHeight(item: FormField): string {
     if (['text', 'form-title'].includes(item.type)) {
@@ -78,22 +116,12 @@ export class CanvasComponent {
     return `${width} ${style} ${color}`;
   }
 
-  getFieldGridColumn(field: FormField): string {
-    return getFormFieldGridColumn(field);
+  getFieldWidth(width?: string): string {
+    return getFormFieldWidth(width);
   }
 
-  /**
-   * Kept in case another template reference still uses the old helper.
-   */
-  getFieldWidth(width?: string): string {
-    switch (width) {
-      case '25%': return 'calc(25% - 4.5px)';
-      case '33%': return 'calc(33.333% - 4px)';
-      case '50%': return 'calc(50% - 3px)';
-      case '66%': return 'calc(66.666% - 4px)';
-      case '75%': return 'calc(75% - 4.5px)';
-      case '100%':
-      default: return '100%';
-    }
+  getContainerStyle(field: FormField): string {
+    return getFormFieldMargin(field);
   }
+
 }
