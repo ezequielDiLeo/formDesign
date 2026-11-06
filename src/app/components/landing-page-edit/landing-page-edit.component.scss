@@ -71,11 +71,30 @@
 }
 
 @media (max-width: 640px) {
+  .edit-outer {
+    width: min(100% - 24px, 900px);
+    margin: 24px auto;
+  }
+
   .edit-form-grid {
     grid-template-columns: 1fr;
   }
 
   .edit-span {
     grid-column: auto;
+  }
+
+  .edit-card {
+    padding: 18px;
+    border-radius: 12px;
+  }
+
+  .edit-actions {
+    flex-direction: column-reverse;
+  }
+
+  .edit-actions button {
+    width: 100%;
+    min-height: 44px;
   }
 }

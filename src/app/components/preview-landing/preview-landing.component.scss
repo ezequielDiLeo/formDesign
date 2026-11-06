@@ -167,7 +167,22 @@
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+    transform: none;
   }
+
+  .calculation-spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: calculation-spin 0.7s linear infinite;
+    margin-right: 10px;
+  }
+}
+
+@keyframes calculation-spin {
+  to { transform: rotate(360deg); }
 }
 
 // 5. SECCIÓN DE RESULTADOS
@@ -351,7 +366,15 @@
 // 7. RESPONSIVE
 @media (max-width: 768px) {
   .preview-stage {
-    padding: 20px 14px;
+    min-height: 100dvh;
+    padding: 16px 12px calc(16px + env(safe-area-inset-bottom));
+  }
+
+  .preview-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: clamp(16px, 5vw, 28px) !important;
+    border-radius: 16px !important;
   }
 
   .form-layout,
@@ -362,5 +385,23 @@
   .preview-field,
   .result-field {
     grid-column: 1 / -1 !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .preview-form-title {
+    overflow-wrap: anywhere;
+  }
+
+  .preview-button {
+    min-height: 44px;
+    max-width: 100%;
+  }
+
+  .results-container {
+    gap: 12px;
+    margin-top: 24px;
+    padding-top: 18px;
   }
 }

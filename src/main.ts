@@ -1,10 +1,18 @@
 (() => {
-  const stored = localStorage.getItem('app_theme');
-  const dark = stored === 'mc-dark';
+  const storedTheme = localStorage.getItem('app_theme');
+  const legacyTheme = localStorage.getItem('theme');
+  const dark = storedTheme
+    ? storedTheme === 'mc-dark'
+    : legacyTheme
+      ? legacyTheme === 'dark'
+      : window.matchMedia('(prefers-color-scheme: dark)').matches;
   const body = document.body;
-  body.setAttribute('data-theme', dark ? 'mc-dark' : 'mc-light');
-  body.classList.remove(dark ? 'mc-light-theme' : 'mc-dark-theme');
-  body.classList.add(dark ? 'mc-dark-theme' : 'mc-light-theme');
+  const theme = dark ? 'mc-dark' : 'mc-light';
+
+  localStorage.setItem('app_theme', theme);
+  body.setAttribute('data-theme', theme);
+  body.classList.toggle('mc-dark-theme', dark);
+  body.classList.toggle('mc-light-theme', !dark);
 })();
 
 import { bootstrapApplication } from '@angular/platform-browser';

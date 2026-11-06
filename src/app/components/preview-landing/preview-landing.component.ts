@@ -196,6 +196,7 @@ export class PreviewLandingComponent {
   }
 
   executeCalculation() {
+    if (this.loading()) return;
 
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -261,7 +262,8 @@ export class PreviewLandingComponent {
         return EMPTY;
       }),
       finalize(() => this.loading.set(false)),
-      takeUntilDestroyed(this.destroyRef)
+      takeUntilDestroyed(this.destroyRef),
+      finalize(() => this.loading.set(false))
     )
     .subscribe();
   }

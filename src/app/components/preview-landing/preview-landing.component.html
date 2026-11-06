@@ -310,6 +310,8 @@
                      <button
                        type="submit"
                        class="preview-button"
+                       [disabled]="loading()"
+                       [attr.aria-busy]="loading()"
                        [style.backgroundColor]="item.backgroundColor || '#2563eb'"
                        [style.color]="item.color || '#ffffff'"
                        [style.fontSize]="item.fontSize || '20px'"
@@ -320,7 +322,12 @@
                        [style.textAlign]="item.textAlign || 'center'"
                        style="width: 100%; box-sizing: border-box;"
                      >
-                       {{ item.label }}
+                       @if (loading()) {
+                         <span class="calculation-spinner" aria-hidden="true"></span>
+                         <span>Calculando...</span>
+                       } @else {
+                         {{ item.label }}
+                       }
                      </button>
                    </div>
                  }

@@ -1,0 +1,144 @@
+<main class="dashboard">
+  <header class="dashboard-header">
+    <div>
+      <p class="eyebrow">FORMFLOW <span>/</span> ESPACIO DE TRABAJO</p>
+      <h1>Tu centro de control</h1>
+      <p class="header-description">Todo lo que necesitas para crear y gestionar tus formularios.</p>
+    </div>
+
+    <div class="header-actions">
+      <app-theme-toggle></app-theme-toggle>
+      <a mat-flat-button color="primary" routerLink="/formulario/edit">
+        <mat-icon>add</mat-icon>
+        Crear formulario
+      </a>
+    </div>
+  </header>
+
+  <section class="welcome-card" aria-label="Bienvenida">
+    <div class="welcome-copy">
+      <span class="welcome-label">TU ESPACIO, TUS IDEAS</span>
+      <h2>De una buena idea<br />a un gran formulario.</h2>
+      <p>Diseña experiencias claras, conecta tus cálculos y comparte tus formularios en minutos.</p>
+      <a mat-stroked-button routerLink="/formulario/edit">
+        Empezar a diseñar
+        <mat-icon>arrow_forward</mat-icon>
+      </a>
+    </div>
+    <div class="welcome-art" aria-hidden="true">
+      <div class="art-orbit orbit-one"></div>
+      <div class="art-orbit orbit-two"></div>
+      <div class="art-card">
+        <span class="art-card-icon"><mat-icon>checklist</mat-icon></span>
+        <span class="art-line line-long"></span>
+        <span class="art-line line-short"></span>
+        <span class="art-field"></span>
+        <span class="art-button"></span>
+      </div>
+      <span class="art-sparkle sparkle-one">✦</span>
+      <span class="art-sparkle sparkle-two">✧</span>
+    </div>
+  </section>
+
+  <section class="stats-grid" aria-label="Resumen de formularios">
+    <article class="stat-card">
+      <span class="stat-icon icon-blue"><mat-icon>description</mat-icon></span>
+      <div>
+        <p class="stat-label">Formularios creados</p>
+        @if (loading()) {
+          <span class="stat-value stat-loading">—</span>
+        } @else {
+          <strong class="stat-value">{{ overview().totalForms }}</strong>
+        }
+      </div>
+      <span class="stat-caption">En tu espacio</span>
+    </article>
+
+    <article class="stat-card">
+      <span class="stat-icon icon-violet"><mat-icon>functions</mat-icon></span>
+      <div>
+        <p class="stat-label">Cálculos conectados</p>
+        @if (loading()) {
+          <span class="stat-value stat-loading">—</span>
+        } @else {
+          <strong class="stat-value">{{ overview().calculationCount }}</strong>
+        }
+      </div>
+      <span class="stat-caption">Tipos en uso</span>
+    </article>
+
+    <article class="stat-card">
+      <span class="stat-icon icon-green"><mat-icon>update</mat-icon></span>
+      <div>
+        <p class="stat-label">Actualizados este mes</p>
+        @if (loading()) {
+          <span class="stat-value stat-loading">—</span>
+        } @else {
+          <strong class="stat-value">{{ overview().updatedThisMonth }}</strong>
+        }
+      </div>
+      <span class="stat-caption">Actividad reciente</span>
+    </article>
+  </section>
+
+  <div class="dashboard-content">
+    <section class="recent-card">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">EN MOVIMIENTO</p>
+          <h2>Formularios recientes</h2>
+        </div>
+        <a class="text-link" routerLink="/formularios">
+          Ver todos
+          <mat-icon>arrow_forward</mat-icon>
+        </a>
+      </div>
+
+      @if (loading()) {
+        <div class="list-message" role="status">Cargando tus formularios...</div>
+      } @else if (overview().recentForms.length === 0) {
+        <div class="empty-state">
+          <span class="empty-icon"><mat-icon>post_add</mat-icon></span>
+          <h3>Aún no hay formularios</h3>
+          <p>Crea el primero y aparecerá aquí para que puedas retomarlo cuando quieras.</p>
+          <a mat-stroked-button routerLink="/formulario/edit">Crear mi primer formulario</a>
+        </div>
+      } @else {
+        <div class="recent-list">
+          @for (form of overview().recentForms; track form.oid) {
+            <a class="recent-item" [routerLink]="['/formularios', 'edit', form.oid]">
+              <span class="form-icon"><mat-icon>article</mat-icon></span>
+              <span class="form-info">
+                <strong>{{ form.name }}</strong>
+                <span>{{ form.description || form.calcName || form.group }}</span>
+              </span>
+              <span class="form-date">
+                {{ form.updateTimestamp ? (form.updateTimestamp | date:'dd/MM/yyyy') : 'Sin fecha' }}
+              </span>
+              <mat-icon class="row-arrow">chevron_right</mat-icon>
+            </a>
+          }
+        </div>
+      }
+    </section>
+
+    <aside class="shortcuts-card">
+      <p class="eyebrow">ATAJOS</p>
+      <h2>¿Qué quieres hacer?</h2>
+      <a class="shortcut" routerLink="/formulario/edit">
+        <span class="shortcut-icon shortcut-blue"><mat-icon>add_circle</mat-icon></span>
+        <span><strong>Crear formulario</strong><small>Empieza desde cero</small></span>
+        <mat-icon class="shortcut-arrow">arrow_forward</mat-icon>
+      </a>
+      <a class="shortcut" routerLink="/formularios">
+        <span class="shortcut-icon shortcut-amber"><mat-icon>folder_open</mat-icon></span>
+        <span><strong>Explorar formularios</strong><small>Busca y organiza los tuyos</small></span>
+        <mat-icon class="shortcut-arrow">arrow_forward</mat-icon>
+      </a>
+      <div class="tip-card">
+        <mat-icon>lightbulb</mat-icon>
+        <p><strong>Un buen comienzo</strong><br />Usa títulos claros y pide solo la información que realmente necesitas.</p>
+      </div>
+    </aside>
+  </div>
+</main>

@@ -10,14 +10,10 @@ export class ThemeToggleComponent implements OnInit {
   isDark = signal(false);
 
   ngOnInit(): void {
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia(
-      '(prefers-color-scheme: dark)'
-    ).matches;
-
+    const savedTheme = localStorage.getItem('app_theme');
     const shouldBeDark = savedTheme
-      ? savedTheme === 'dark'
-      : prefersDark;
+      ? savedTheme === 'mc-dark'
+      : window.matchMedia('(prefers-color-scheme: dark)').matches;
 
     this.isDark.set(shouldBeDark);
     this.applyTheme(shouldBeDark);
@@ -29,7 +25,7 @@ export class ThemeToggleComponent implements OnInit {
     this.isDark.set(nextState);
     this.applyTheme(nextState);
 
-    localStorage.setItem('theme', nextState ? 'dark' : 'light');
+    localStorage.setItem('app_theme', nextState ? 'mc-dark' : 'mc-light');
   }
 
   private applyTheme(isDark: boolean): void {
@@ -42,7 +38,7 @@ export class ThemeToggleComponent implements OnInit {
 
     document.body.setAttribute(
       'data-theme',
-      isDark ? 'mc-dark' : 'light'
+      isDark ? 'mc-dark' : 'mc-light'
     );
   }
 }

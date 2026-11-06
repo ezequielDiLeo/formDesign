@@ -11,3 +11,24 @@
   height: 100%;
   overflow-y: auto;
 }
+.layout-wrapper {
+  min-width: 0;
+}
+
+.layout-content {
+  min-width: 0;
+}
+
+app-side-bar {
+  display: contents;
+}
+
+@media (max-width: 680px) {
+  .layout-wrapper {
+    height: 100dvh;
+  }
+
+  .layout-content {
+    padding-bottom: calc(76px + env(safe-area-inset-bottom));
+  }
+}

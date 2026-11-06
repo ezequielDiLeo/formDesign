@@ -10,6 +10,7 @@
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  min-width: 0;
 }
 
 :host-context(body.mc-dark-theme) .canvas-area {
@@ -42,6 +43,42 @@
   box-shadow:
     0 10px 30px rgba(15, 23, 42, .08),
     0 2px 8px rgba(15, 23, 42, .05);
+}
+
+@media (max-width: 900px) {
+  .canvas-area {
+    padding: clamp(12px, 3vw, 24px);
+  }
+
+  .canvas {
+    min-height: 420px;
+    padding: clamp(14px, 4vw, 28px) !important;
+    border-radius: 12px;
+  }
+
+  .canvas-field {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .canvas-header {
+    justify-content: flex-start;
+  }
+
+  .canvas-header button {
+    min-height: 44px;
+    margin: 0;
+    padding: 0 14px;
+  }
+
+  .delete-btn {
+    top: 2px;
+    right: 2px;
+    width: 40px;
+    height: 40px;
+    opacity: 1;
+  }
 }
 
 .canvas.cdk-drop-list-dragging {
